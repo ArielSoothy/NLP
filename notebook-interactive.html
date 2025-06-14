@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Text Classification Notebook | NLP Project</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="visualizations.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .notebook-container {
@@ -246,7 +247,8 @@ print("🎯 Ready to build NLP from fundamentals!")
                 </div>
 
                 <div style="background: white; padding: 20px; border-radius: 10px; margin: 15px 0;">
-                    <canvas id="emotionChart" width="400" height="200"></canvas>
+                    <div id="emotion-pie-chart"></div>
+                </div>
                 </div>
                 
                 <div class="code-block">
@@ -493,6 +495,10 @@ print("✅ Training completed!")
                     • Sample 5: True=neutral, Predicted=neutral ✅<br>
                 </div>
 
+                <div style="background: white; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <div id="confusion-matrix"></div>
+                </div>
+
                 <div class="code-block">
 def compute_precision_recall(predictions, references):
     """Calculate precision and recall from scratch"""
@@ -638,5 +644,6 @@ print(f"🎯 Accuracy: {accuracy:.2f}")
             });
         });
     </script>
+    <script src="visualizations.js"></script>
 </body>
 </html>
