@@ -388,9 +388,9 @@ function initializeCharts() {
                     legend: {
                         position: 'bottom',
                         labels: {
-                            padding: 20,
+                            padding: 15,
                             font: {
-                                size: 12
+                                size: 11
                             }
                         }
                     },
@@ -435,19 +435,40 @@ function initializeCharts() {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Number of Articles'
+                            text: 'Number of Articles',
+                            font: {
+                                size: 11
+                            }
+                        },
+                        ticks: {
+                            font: {
+                                size: 10
+                            }
                         }
                     },
                     x: {
                         title: {
                             display: true,
-                            text: 'Character Count'
+                            text: 'Character Count',
+                            font: {
+                                size: 11
+                            }
+                        },
+                        ticks: {
+                            font: {
+                                size: 10
+                            }
                         }
                     }
                 },
                 plugins: {
                     legend: {
                         position: 'top',
+                        labels: {
+                            font: {
+                                size: 11
+                            }
+                        }
                     },
                     tooltip: {
                         mode: 'index',
