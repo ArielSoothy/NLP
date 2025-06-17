@@ -1,268 +1,219 @@
-# Text Summarization Implementation
-# Due to environment issues, implementing with simplified dataset and core Python
+import matplotlib.pyplot as plt
+from datasets import load_dataset
 
-import re
-import string
-from collections import Counter
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
-# Sample CNN-like articles and summaries for demonstration
-sample_articles = [
-    {
-        'article': "Scientists at Stanford University have made a groundbreaking discovery in the field of artificial intelligence. The research team, led by Dr. Jane Smith, has developed a new algorithm that can process natural language with unprecedented accuracy. The algorithm uses advanced neural networks to understand context and meaning in human speech. This breakthrough could revolutionize how computers interact with humans. The technology has potential applications in healthcare, education, and customer service. The research was published in the journal Nature AI and has received significant attention from the scientific community. Industry experts believe this could be the next major step in AI development.",
-        'highlights': "Stanford researchers develop new AI algorithm. Technology shows unprecedented accuracy in natural language processing. Potential applications in healthcare, education, and customer service."
-    },
-    {
-        'article': "A severe earthquake measuring 7.2 on the Richter scale struck the Pacific coast early this morning. The earthquake originated 50 kilometers off the coast and was felt across multiple cities. Emergency services have been deployed to assess damage and provide assistance. Local authorities have issued tsunami warnings for coastal areas. At least 15 people have been reported injured, with several buildings damaged in the downtown area. Schools and businesses have been temporarily closed as a precautionary measure. Seismologists are monitoring aftershocks and advising residents to stay alert.",
-        'highlights': "7.2 magnitude earthquake hits Pacific coast. Emergency services deployed, tsunami warnings issued. 15 people injured, buildings damaged."
-    },
-    {
-        'article': "The global climate summit concluded today with representatives from 195 countries agreeing on new carbon emission targets. The three-day conference focused on strategies to combat climate change and reduce greenhouse gas emissions. Key agreements include a 50% reduction in carbon emissions by 2030 and increased funding for renewable energy projects. Environmental activists have praised the commitments but emphasize the need for immediate action. The summit also addressed issues of climate adaptation and support for developing nations. World leaders called the agreement a historic step toward a sustainable future.",
-        'highlights': "Climate summit ends with agreement from 195 countries. 50% carbon emission reduction target by 2030. Increased funding for renewable energy projects."
-    }
-]
+# Download necessary resources from nltk
+nltk.download('punkt')
+nltk.download('stopwords')
 
-print("🌍 Text Summarization Project")
-print("=" * 50)
-print(f"📚 Dataset: {len(sample_articles)} sample articles")
-
-# Create a simple dataframe-like structure
-class SimpleDataFrame:
-    def __init__(self, data):
-        self.data = data
-    
-    def __len__(self):
-        return len(self.data)
-    
-    def __getitem__(self, index):
-        return self.data[index]
-
-df = SimpleDataFrame(sample_articles)
+dataset = load_dataset("cnn_dailymail", '3.0.0')
+df = dataset['train'].to_pandas()
+df = df.head(1000)
 
 def preprocess_text(text):
-    """Simple text preprocessing without external libraries"""
-    # Convert to lowercase
-    text = text.lower()
-    # Remove punctuation
-    text = text.translate(str.maketrans('', '', string.punctuation))
-    # Simple tokenization by splitting on whitespace
-    tokens = text.split()
-    
-    # Simple stop words list (basic English stop words)
-    stop_words = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'this', 'that', 'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'can', 'must', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them'}
-    
-    # Remove stop words and non-alphabetic tokens
+    # Tokenize text
+    tokens = word_tokenize(text)
+    # Convert to lower case
+    tokens = [token.lower() for token in tokens]
+    # Remove stop words (optional)
+    stop_words = set(stopwords.words('english'))
     tokens = [token for token in tokens if token not in stop_words and token.isalpha()]
     return " ".join(tokens)
 
 ###====== Part 2.1 =====================
-# Create article_len and highlights_len columns
-print("\n📏 Part 2.1: Adding length columns")
-print("-" * 30)
+###Write a code that creates two new columns -  artice_len and highlights_len
 
-for i, article_data in enumerate(df.data):
-    article_len = len(article_data['article'].split())
-    highlights_len = len(article_data['highlights'].split())
-    
-    # Add to the data structure
-    df.data[i]['article_len'] = article_len
-    df.data[i]['highlights_len'] = highlights_len
-    
-    print(f"Article {i+1}: Article length = {article_len} words, Highlights length = {highlights_len} words")
+# Create length columns - counting characters
+df['article_len'] = df['article'].str.len()
+df['highlights_len'] = df['highlights'].str.len()
 
-print("✅ Length columns added successfully!")
+print("Part 2.1 - Column lengths created:")
+print(f"Average article length: {df['article_len'].mean():.0f} characters")
+print(f"Average highlights length: {df['highlights_len'].mean():.0f} characters")
+print(f"Ratio (highlights/article): {(df['highlights_len'].mean() / df['article_len'].mean()):.3f}")
+print()
 
 
 ###====== Part 2.2 =====================
-# Plot histograms function
+### Fill in this code
 def plot_histograms(df):
-    """Create simple histogram visualization without matplotlib"""
-    print("\n📊 Part 2.2: Length Distribution Analysis")
-    print("-" * 40)
+    """Plot histograms of article and highlights lengths side by side"""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
     
-    article_lengths = [item['article_len'] for item in df.data]
-    highlight_lengths = [item['highlights_len'] for item in df.data]
+    # Article length histogram
+    ax1.hist(df['article_len'], bins=30, color='skyblue', alpha=0.7, edgecolor='black')
+    ax1.set_title('Distribution of Article Lengths', fontsize=14, fontweight='bold')
+    ax1.set_xlabel('Article Length (characters)', fontsize=12)
+    ax1.set_ylabel('Frequency', fontsize=12)
+    ax1.grid(True, alpha=0.3)
     
-    print("📝 Article Length Statistics:")
-    print(f"  Min: {min(article_lengths)} words")
-    print(f"  Max: {max(article_lengths)} words")
-    print(f"  Average: {sum(article_lengths)/len(article_lengths):.1f} words")
+    # Highlights length histogram  
+    ax2.hist(df['highlights_len'], bins=30, color='lightcoral', alpha=0.7, edgecolor='black')
+    ax2.set_title('Distribution of Highlights Lengths', fontsize=14, fontweight='bold')
+    ax2.set_xlabel('Highlights Length (characters)', fontsize=12)
+    ax2.set_ylabel('Frequency', fontsize=12)
+    ax2.grid(True, alpha=0.3)
     
-    print("\n🔍 Highlights Length Statistics:")
-    print(f"  Min: {min(highlight_lengths)} words")
-    print(f"  Max: {max(highlight_lengths)} words")
-    print(f"  Average: {sum(highlight_lengths)/len(highlight_lengths):.1f} words")
+    plt.tight_layout()
+    plt.show()
     
-    # Simple text-based histogram
-    print("\n📊 Simple Article Length Distribution:")
-    for i, length in enumerate(article_lengths):
-        print(f"  Article {i+1}: {'█' * (length // 10)} ({length} words)")
-    
-    print("\n📊 Simple Highlights Length Distribution:")
-    for i, length in enumerate(highlight_lengths):
-        print(f"  Highlights {i+1}: {'█' * length} ({length} words)")
+    print("Part 2.2 - Length statistics:")
+    print(f"Articles - Min: {df['article_len'].min()}, Max: {df['article_len'].max()}, Mean: {df['article_len'].mean():.0f}")
+    print(f"Highlights - Min: {df['highlights_len'].min()}, Max: {df['highlights_len'].max()}, Mean: {df['highlights_len'].mean():.0f}")
+    print()
     
     return None
 
+# plot_histograms(df)
 plot_histograms(df)
 
 ###======Part 2.3 ================
-# Implement ROUGE-N calculation
+### Fill in the code
 def ngrams(text, n):
-    """Generate n-grams from text"""
     # Preprocess the text first
     processed_text = preprocess_text(text)
     words = processed_text.split()
-    
-    if len(words) < n:
-        return set()
-    
-    # Generate n-grams
-    ngrams_list = []
-    for i in range(len(words) - n + 1):
-        ngram = tuple(words[i:i+n])
-        ngrams_list.append(ngram)
-    
-    return set(ngrams_list)
+    return set(zip(*[words[i:] for i in range(n)]))
+
 
 def rouge_n(reference, candidate, n):
-    """Calculate ROUGE-N score between reference and candidate texts"""
+    """
+    Calculate ROUGE-N score between reference and candidate text.
+    ROUGE-N = (Number of overlapping n-grams) / (Number of n-grams in reference)
+    """
     # Get n-grams for both texts
     ref_ngrams = ngrams(reference, n)
     cand_ngrams = ngrams(candidate, n)
     
+    # If reference has no n-grams, return 0
     if len(ref_ngrams) == 0:
         return 0.0
     
-    # Calculate overlap
+    # Count overlapping n-grams
     overlap = len(ref_ngrams.intersection(cand_ngrams))
     
-    # ROUGE-N = overlap / total n-grams in reference
-    rouge_score = overlap / len(ref_ngrams) if len(ref_ngrams) > 0 else 0.0
+    # Calculate ROUGE-N score
+    rouge_score = overlap / len(ref_ngrams)
     
     return rouge_score
+###=========== 2.3 ================    
 
-print("\n🎯 Part 2.3: ROUGE Score Implementation")
-print("-" * 40)    
+# Example of calculating Rouge-1 and Rouge-2 for a dataframe
+print("Part 2.3 - Calculating ROUGE scores...")
+df['rouge_1'] = df.apply(lambda row: rouge_n(row['highlights'], row['article'], 1), axis=1)
+df['rouge_2'] = df.apply(lambda row: rouge_n(row['highlights'], row['article'], 2), axis=1)
 
-# Calculate ROUGE-1 and ROUGE-2 scores for our dataset
-print("📊 Calculating ROUGE scores...")
+print("ROUGE-1 Statistics:")
+print(f"Mean: {df['rouge_1'].mean():.4f}, Max: {df['rouge_1'].max():.4f}, Min: {df['rouge_1'].min():.4f}")
+print("ROUGE-2 Statistics:")
+print(f"Mean: {df['rouge_2'].mean():.4f}, Max: {df['rouge_2'].max():.4f}, Min: {df['rouge_2'].min():.4f}")
+print()
 
-for i, article_data in enumerate(df.data):
-    rouge_1 = rouge_n(article_data['highlights'], article_data['article'], 1)
-    rouge_2 = rouge_n(article_data['highlights'], article_data['article'], 2)
-    
-    # Add scores to the data
-    df.data[i]['rouge_1'] = rouge_1
-    df.data[i]['rouge_2'] = rouge_2
-    
-    print(f"Article {i+1}:")
-    print(f"  ROUGE-1: {rouge_1:.3f}")
-    print(f"  ROUGE-2: {rouge_2:.3f}")
+# Find examples with highest and lowest ROUGE-2 scores
+max_rouge_2_index = df['rouge_2'].idxmax()
+min_rouge_2_index = df['rouge_2'].idxmin()
 
-# Simple visualization without matplotlib
-print("\n📈 ROUGE-2 Score Distribution:")
-rouge_2_scores = [item['rouge_2'] for item in df.data]
+print(f"Highest ROUGE-2 Score: {df.loc[max_rouge_2_index, 'rouge_2']:.4f} (Index: {max_rouge_2_index})")
+print(f"Lowest ROUGE-2 Score: {df.loc[min_rouge_2_index, 'rouge_2']:.4f} (Index: {min_rouge_2_index})")
+print()
 
-for i, score in enumerate(rouge_2_scores):
-    bar_length = int(score * 50)  # Scale for visualization
-    print(f"Article {i+1}: {'█' * bar_length} ({score:.3f})")
+plt.figure(figsize=(12, 6))
+plt.hist(df['rouge_2'], bins=30, color='blue', alpha=0.7)
+plt.title('Rouge-2 score distribution on ground truth')
+plt.xlabel('ROUGE-2 Score')
+plt.ylabel('Frequency') 
+plt.grid(True, alpha=0.3)
+plt.show()
 
-# Find article with highest ROUGE-2 score
-max_rouge_2_score = max(rouge_2_scores)
-max_rouge_2_index = rouge_2_scores.index(max_rouge_2_score)
-
-print(f"\n🏆 Highest ROUGE-2 Score Analysis:")
-print(f"Index of article with highest Rouge-2 score: {max_rouge_2_index}")
-print(f"Highest Rouge-2 score: {max_rouge_2_score:.3f}")
-print("========================\n")
-print("Article with highest Rouge-2 score:")
-print(df.data[max_rouge_2_index]['article'][:200] + "...")
-print("========================\n")
-print("Highlights with highest Rouge-2 score:")
-print(df.data[max_rouge_2_index]['highlights'])
+print("Analysis of lowest ROUGE-2 score example:")
+print("========================")
+print(f"Article: {df.iloc[min_rouge_2_index]['article'][:200]}...")
+print("========================")
+print(f"Highlights: {df.iloc[min_rouge_2_index]['highlights']}")
+print("========================")
+print("Analysis: This example has a low ROUGE-2 score likely because:")
+print("1. The highlights use different vocabulary than the article")
+print("2. The highlights may be more abstractive (paraphrased) rather than extractive")
+print("3. Few 2-word phrases (bigrams) are shared between article and highlights")
+print()
 
 
 
 ###=========== 2.4 ================    
-# Simple extractive summarization implementation
-print("\n🤖 Part 2.4: Text Summarization Implementation")
-print("-" * 50)
-
-class SimpleSummarizer:
-    """Simple extractive summarization using sentence scoring"""
-    
-    def __init__(self):
-        pass
-    
-    def score_sentences(self, text):
-        """Score sentences based on word frequency"""
-        # Split into sentences (simple approach)
-        sentences = [s.strip() for s in text.split('.') if s.strip()]
-        
-        # Get word frequencies
-        words = preprocess_text(text).split()
-        word_freq = Counter(words)
-        
-        # Score each sentence
-        sentence_scores = {}
-        for i, sentence in enumerate(sentences):
-            sentence_words = preprocess_text(sentence).split()
-            score = 0
-            for word in sentence_words:
-                if word in word_freq:
-                    score += word_freq[word]
-            
-            if len(sentence_words) > 0:
-                sentence_scores[i] = score / len(sentence_words)
-            else:
-                sentence_scores[i] = 0
-        
-        return sentence_scores, sentences
-    
-    def summarize(self, text, max_sentences=2):
-        """Create extractive summary"""
-        sentence_scores, sentences = self.score_sentences(text)
-        
-        # Get top scored sentences
-        top_sentences = sorted(sentence_scores.items(), key=lambda x: x[1], reverse=True)
-        
-        # Select top sentences (up to max_sentences)
-        selected_indices = sorted([idx for idx, score in top_sentences[:max_sentences]])
-        
-        # Create summary
-        summary = '. '.join([sentences[i] for i in selected_indices])
-        return summary
-
 # Initialize the summarization pipeline
-summarizer = SimpleSummarizer()
+from transformers import pipeline
+import warnings
+warnings.filterwarnings("ignore")
 
-def summarize_text(text):
-    """Summarizing the text using our simple pipeline"""
-    summary = summarizer.summarize(text, max_sentences=2)
-    return summary
+print("Part 2.4 - Initializing T5-small summarization pipeline...")
+print("(This may take a few minutes to download the model for the first time...)")
+summarizer = pipeline("summarization", model="t5-small")
+print("Model loaded successfully!")
 
-print("✅ Simple extractive summarizer initialized!")
-
-# Test on our sample articles
-print("\n🧪 Testing Summarization on Sample Articles:")
-print("=" * 60)
-
-for i, article_data in enumerate(df.data):
-    print(f"\nArticle {i+1}:")
-    print(f"Original length: {article_data['article_len']} words")
+def summarize_text(text, index):
+    # Truncate text if too long (T5 has input limits)
+    max_input_length = 1000  # Reasonable limit for T5-small
+    if len(text) > max_input_length:
+        text = text[:max_input_length]
     
-    summary = summarize_text(article_data['article'])
-    summary_word_count = len(summary.split())
-    
-    print(f"Summary ({summary_word_count} words):")
-    print(f"'{summary}'")
-    
-    # Calculate ROUGE score for our generated summary
-    rouge_1_generated = rouge_n(article_data['highlights'], summary, 1)
-    rouge_2_generated = rouge_n(article_data['highlights'], summary, 2)
-    
-    print(f"ROUGE-1 vs reference: {rouge_1_generated:.3f}")
-    print(f"ROUGE-2 vs reference: {rouge_2_generated:.3f}")
-    print("-" * 60)
+    try:
+        # Summarizing the text using the pipeline
+        summary = summarizer(text, max_length=50, min_length=10, do_sample=False)
+        print(f"Processed article {index+1}/10")
+        return summary[0]['summary_text']
+    except Exception as e:
+        print(f"Error processing article {index+1}: {str(e)}")
+        return "Error in summarization"
 
-print("\n🎯 Summarization Implementation Complete!")
+# Calculate the rouge-2 score of the first 10 entries
+print("Calculating ROUGE-2 scores for T5-small summaries on first 10 entries:")
+print("=" * 70)
+
+t5_summaries = []
+t5_rouge_2_scores = []
+
+for i in range(10):
+    article = df.iloc[i]['article']
+    ground_truth = df.iloc[i]['highlights']
+    
+    # Generate T5 summary
+    t5_summary = summarize_text(article, i)
+    t5_summaries.append(t5_summary)
+    
+    # Calculate ROUGE-2 score for T5 summary vs ground truth
+    t5_rouge_2 = rouge_n(ground_truth, t5_summary, 2)
+    t5_rouge_2_scores.append(t5_rouge_2)
+    
+    # Compare with ground truth ROUGE-2 (article vs highlights)
+    ground_truth_rouge_2 = df.iloc[i]['rouge_2']
+    
+    print(f"Entry {i+1}:")
+    print(f"  Ground Truth Highlights: {ground_truth}")
+    print(f"  T5 Summary: {t5_summary}")
+    print(f"  T5 ROUGE-2 Score: {t5_rouge_2:.4f}")
+    print(f"  Ground Truth ROUGE-2: {ground_truth_rouge_2:.4f}")
+    print(f"  T5 vs Ground Truth: {'Lower' if t5_rouge_2 < ground_truth_rouge_2 else 'Higher'}")
+    print()
+
+print("Summary of T5-small Performance:")
+print(f"Average T5 ROUGE-2 Score: {sum(t5_rouge_2_scores)/len(t5_rouge_2_scores):.4f}")
+print(f"Average Ground Truth ROUGE-2: {df.iloc[:10]['rouge_2'].mean():.4f}")
+
+lower_count = sum(1 for i in range(10) if t5_rouge_2_scores[i] < df.iloc[i]['rouge_2'])
+print(f"T5 scored lower than ground truth in {lower_count}/10 cases")
+
+print("\n" + "="*50)
+print("PART 2 - TEXT SUMMARIZATION COMPLETED!")
+print("="*50)
+print("Results Summary:")
+print(f"- Dataset: CNN DailyMail (1000 articles)")
+print(f"- Average article length: {df['article_len'].mean():.0f} characters")
+print(f"- Average highlights length: {df['highlights_len'].mean():.0f} characters")
+print(f"- Ground truth ROUGE-1 mean: {df['rouge_1'].mean():.4f}")
+print(f"- Ground truth ROUGE-2 mean: {df['rouge_2'].mean():.4f}")
+print(f"- T5-small ROUGE-2 mean: {sum(t5_rouge_2_scores)/len(t5_rouge_2_scores):.4f}")
+print("All visualizations have been displayed!")
+print("="*50)
