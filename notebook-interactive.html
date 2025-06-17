@@ -1,4 +1,254 @@
-<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>NLP Project 3 - Interactive Results Showcase | Ariel Soothy</title>    <link rel="stylesheet" href="styles.css">    <link rel="stylesheet" href="visualizations.css">    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>    <style>        body {            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;            margin: 0;            padding: 0;            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);            min-height: 100vh;        }                .notebook-container {            max-width: 1200px;            margin: 0 auto;            padding: 20px;        }                .project-header {            text-align: center;            color: white;            margin-bottom: 40px;        }                .project-header h1 {            font-size: 3em;            margin: 0;            background: linear-gradient(45deg, #ffd700, #ffed4e);            background-clip: text;            -webkit-background-clip: text;            -webkit-text-fill-color: transparent;            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);        }                .project-header p {            font-size: 1.2em;            margin: 10px 0;            opacity: 0.9;        }                .nav-pills {            display: flex;            justify-content: center;            margin: 30px 0;            gap: 10px;            flex-wrap: wrap;        }                .nav-pill {            background: rgba(255, 255, 255, 0.2);            color: white;            padding: 12px 24px;            border-radius: 25px;            cursor: pointer;            transition: all 0.3s ease;            border: 2px solid transparent;            font-weight: 500;        }                .nav-pill:hover {            background: rgba(255, 255, 255, 0.3);            transform: translateY(-2px);        }                .nav-pill.active {            background: linear-gradient(45deg, #ff6b6b, #ee5a24);            border-color: rgba(255, 255, 255, 0.5);            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);        }                .section {            display: none;        }                .section.active {            display: block;        }                .notebook-cell {            background: rgba(255, 255, 255, 0.95);            margin: 20px 0;            border-radius: 15px;            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);            backdrop-filter: blur(4px);            border: 1px solid rgba(255, 255, 255, 0.18);            overflow: hidden;            transition: transform 0.3s ease;        }                .notebook-cell:hover {            transform: translateY(-5px);        }                .cell-header {            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);            color: white;            padding: 15px 20px;            font-weight: bold;            cursor: pointer;            display: flex;            justify-content: space-between;            align-items: center;            transition: all 0.3s ease;        }                .cell-header:hover {            background: linear-gradient(90deg, #3d8bfe 0%, #00d2fe 100%);        }                .cell-header i {            transition: transform 0.3s ease;        }                .cell-header.expanded i {            transform: rotate(180deg);        }                .cell-content {            padding: 20px;            display: none;            animation: slideDown 0.3s ease;        }                .cell-content.active {            display: block;        }                @keyframes slideDown {            from { opacity: 0; transform: translateY(-10px); }            to { opacity: 1; transform: translateY(0); }        }                .question-number {            background: linear-gradient(45deg, #ff6b6b, #ee5a24);            color: white;            border-radius: 50%;            width: 30px;            height: 30px;            display: inline-flex;            align-items: center;            justify-content: center;            font-weight: bold;            margin-right: 10px;        }                .code-block {            background: #2d3748;            color: #e2e8f0;            border-radius: 8px;            padding: 15px;            margin: 15px 0;            overflow-x: auto;            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;            line-height: 1.5;        }                .result-box {            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);            color: white;            border-radius: 8px;            padding: 15px;            margin: 15px 0;        }                .metric-grid {            display: grid;            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));            gap: 15px;            margin: 20px 0;        }                .metric-card {            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);            color: white;            padding: 20px;            border-radius: 10px;            text-align: center;            transition: transform 0.3s ease;        }                .metric-card:hover {            transform: scale(1.05);        }                .metric-card h3 {            margin: 0 0 10px 0;            font-size: 2em;        }                .metric-card p {            margin: 0;            opacity: 0.9;        }                .comparison-table {            width: 100%;            border-collapse: collapse;            margin: 20px 0;            background: white;            border-radius: 8px;            overflow: hidden;            box-shadow: 0 4px 15px rgba(0,0,0,0.1);        }                .comparison-table th {            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);            color: white;            padding: 15px;            text-align: left;        }                .comparison-table td {            padding: 12px 15px;            border-bottom: 1px solid #e2e8f0;        }                .comparison-table tr:hover {            background: #f8f9fa;        }                .improvement {            color: #22c55e;            font-weight: bold;        }                .degradation {            color: #ef4444;            font-weight: bold;        }                .chart-container {            position: relative;            height: 400px;            margin: 20px 0;            background: white;            border-radius: 8px;            padding: 20px;        }                .insight-box {            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);            border-radius: 8px;            padding: 20px;            margin: 15px 0;            border-left: 5px solid #f59e0b;        }                .insight-box h4 {            margin: 0 0 10px 0;            color: #92400e;        }                .insight-box p {            margin: 0;            color: #451a03;        }                .architecture-diagram {            background: white;            border-radius: 8px;            padding: 20px;            margin: 20px 0;            text-align: center;        }                .step-indicator {            display: flex;            justify-content: space-between;            align-items: center;            margin: 20px 0;            flex-wrap: wrap;        }                .step {            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);            color: white;            padding: 10px 20px;            border-radius: 25px;            font-size: 0.9em;            position: relative;            margin: 5px;        }                .step::after {            content: '→';            position: absolute;            right: -25px;            top: 50%;            transform: translateY(-50%);            color: #667eea;            font-weight: bold;        }                .step:last-child::after {            display: none;        }                .badge {            display: inline-block;            background: linear-gradient(45deg, #ff6b6b, #ee5a24);            color: white;            padding: 4px 12px;            border-radius: 12px;            font-size: 0.8em;            font-weight: bold;            margin: 0 5px;        }                .badge.success {            background: linear-gradient(45deg, #22c55e, #16a34a);        }                .badge.warning {            background: linear-gradient(45deg, #f59e0b, #d97706);        }                .progress-bar {            width: 100%;            height: 20px;            background: #e2e8f0;            border-radius: 10px;            overflow: hidden;            margin: 10px 0;        }                .progress-fill {            height: 100%;            background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);            transition: width 2s ease;        }                @media (max-width: 768px) {            .nav-pills {                flex-direction: column;            }                        .step-indicator {                flex-direction: column;            }                        .step::after {                display: none;            }                        .project-header h1 {                font-size: 2em;            }        }    </style></head><body>    <div class="notebook-container">        <!-- Project Header -->        <div class="project-header">            <h1>🧠 NLP Project 3</h1>            <p><strong>Student:</strong> Ariel Soothy | <strong>Date:</strong> June 2025</p>            <p>Comprehensive Natural Language Processing Analysis</p>        </div>        <!-- Navigation Pills -->        <div class="nav-pills">            <div class="nav-pill active" onclick="showSection('classification')">                <i class="fas fa-brain"></i> Part 1: Text Classification            </div>            <div class="nav-pill" onclick="showSection('summarization')">                <i class="fas fa-compress-alt"></i> Part 2: Text Summarization            </div>            <div class="nav-pill" onclick="showSection('retrieval')">                <i class="fas fa-search"></i> Part 3: Information Retrieval            </div>        </div>        <!-- PART 1: TEXT CLASSIFICATION -->        <div id="classification" class="section active">                        <!-- Question 1.1: Dataset Analysis -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">1.1</span>Dataset Analysis & Emotion Distribution</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>❓ What we needed to do:</h3>                    <p>Analyze the emotion dataset and create a pie chart showing the distribution of emotions.</p>                                        <h3>🔧 What we did:</h3>                    <div class="code-block"># Load and analyze the datasetdataset = pd.read_csv('text.csv')emotion_counts = dataset['emotions'].value_counts()# Create pie chartplt.figure(figsize=(10, 8))plt.pie(emotion_counts.values, labels=emotion_counts.index, autopct='%1.1f%%')plt.title('Emotion Distribution in Dataset')                    </div>                                        <h3>📊 Results:</h3>                    <div class="metric-grid">                        <div class="metric-card">                            <h3>82.1%</h3>                            <p>Neutral Emotions</p>                        </div>                        <div class="metric-card">                            <h3>17.9%</h3>                            <p>Non-Neutral Emotions</p>                        </div>                        <div class="metric-card">                            <h3>10,000</h3>                            <p>Total Samples</p>                        </div>                    </div>                                        <div class="chart-container">                        <canvas id="emotionChart"></canvas>                    </div>                                        <div class="insight-box">                        <h4>🔍 Key Insight</h4>                        <p>The dataset shows severe class imbalance with 82.1% neutral emotions. This creates a major challenge for machine learning models, which we'll explore in the next questions.</p>                    </div>                </div>            </div>            <!-- Question 1.2: Metrics Explanation -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">1.2</span>Why Precision & Recall Beat Accuracy</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>❓ What we needed to explain:</h3>                    <p>Why precision and recall are better metrics than accuracy for this imbalanced dataset.</p>                                        <h3>📈 Our analysis:</h3>                    <div class="step-indicator">                        <div class="step">Class Imbalance Problem</div>                        <div class="step">Accuracy Deception</div>                        <div class="step">Precision & Recall Truth</div>                    </div>                                        <table class="comparison-table">                        <thead>                            <tr>                                <th>Metric</th>                                <th>Definition</th>                                <th>Problem with Accuracy</th>                                <th>Why P&R are Better</th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td><strong>Accuracy</strong></td>                                <td>Correct predictions / Total predictions</td>                                <td>82% by always predicting "neutral"</td>                                <td>Misleading for imbalanced data</td>                            </tr>                            <tr>                                <td><strong>Precision</strong></td>                                <td>True Positives / (TP + False Positives)</td>                                <td>0% - never detects emotions</td>                                <td>Shows actual detection quality</td>                            </tr>                            <tr>                                <td><strong>Recall</strong></td>                                <td>True Positives / (TP + False Negatives)</td>                                <td>0% - misses all emotions</td>                                <td>Shows coverage of actual emotions</td>                            </tr>                        </tbody>                    </table>                                        <div class="insight-box">                        <h4>💡 Key Learning</h4>                        <p>A model that always predicts "neutral" gets 82% accuracy but 0% precision and recall. This shows accuracy can be completely misleading with imbalanced data!</p>                    </div>                </div>            </div>            <!-- Question 1.3: Initial Model Results -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">1.3</span>Initial Model Training Results</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>🔧 What we did:</h3>                    <p>Trained a DistilBERT model on the original dataset and analyzed its performance.</p>                                        <div class="code-block"># Train DistilBERT modelmodel = DistilBertForSequenceClassification.from_pretrained(    'distilbert-base-uncased',     num_labels=2)trainer = Trainer(model=model, args=training_args,                  train_dataset=train_dataset,                  eval_dataset=test_dataset)trainer.train()                    </div>                                        <h3>😱 Results - The Model's Shocking Behavior:</h3>                    <div class="metric-grid">                        <div class="metric-card">                            <h3>81.5%</h3>                            <p>Test Accuracy <span class="badge warning">Misleading!</span></p>                        </div>                        <div class="metric-card">                            <h3>0.000</h3>                            <p>Precision <span class="badge">Broken!</span></p>                        </div>                        <div class="metric-card">                            <h3>0.000</h3>                            <p>Recall <span class="badge">Broken!</span></p>                        </div>                    </div>                                        <h3>🧮 Confusion Matrix Analysis:</h3>                    <table class="comparison-table">                        <thead>                            <tr>                                <th>Predicted</th>                                <th>Actual Neutral</th>                                <th>Actual Non-Neutral</th>                                <th>Total</th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td><strong>Neutral</strong></td>                                <td>1,605 ✅</td>                                <td>364 ❌</td>                                <td>1,969</td>                            </tr>                            <tr>                                <td><strong>Non-Neutral</strong></td>                                <td>0</td>                                <td>0</td>                                <td>0</td>                            </tr>                        </tbody>                    </table>                                        <div class="insight-box">                        <h4>🚨 Critical Discovery</h4>                        <p>The model NEVER predicts non-neutral emotions! It learned to always predict "neutral" due to class imbalance. This is a classic example of how AI can learn the wrong pattern.</p>                    </div>                </div>            </div>            <!-- Questions 1.4-1.5: Cross-Dataset Evaluation -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">1.4-1.5</span>Cross-Dataset Testing Reveals Model Bias</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>❓ What we needed to do:</h3>                    <p>Test our broken model on different datasets to understand its limitations.</p>                                        <h3>📊 Testing Results:</h3>                    <table class="comparison-table">                        <thead>                            <tr>                                <th>Dataset</th>                                <th>Accuracy</th>                                <th>What Actually Happened</th>                                <th>Pattern Discovered</th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td><strong>Emotions Dataset</strong></td>                                <td class="degradation">0%</td>                                <td>Model predicted neutral, all truth was non-neutral</td>                                <td>100% wrong predictions</td>                            </tr>                            <tr>                                <td><strong>Sentiment Dataset</strong></td>                                <td class="degradation">46%</td>                                <td>Model predicted neutral, 54% truth was non-neutral</td>                                <td>Performance = % neutral in test set</td>                            </tr>                        </tbody>                    </table>                                        <div class="chart-container">                        <canvas id="crossDatasetChart"></canvas>                    </div>                                        <div class="insight-box">                        <h4>🔬 Breakthrough Understanding</h4>                        <p>The model's accuracy on any dataset equals the percentage of neutral samples in that dataset! This proves the model learned dataset statistics, not emotion patterns.</p>                    </div>                </div>            </div>            <!-- Question 1.6: Advanced Solution -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">1.6</span>🚀 Advanced Solution: Multi-Dataset Retraining</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>🧠 What we did (Advanced):</h3>                    <p>Combined multiple datasets to create better class balance and retrained the model.</p>                                        <div class="step-indicator">                        <div class="step">Combine Datasets</div>                        <div class="step">Improve Balance</div>                        <div class="step">Retrain Model</div>                        <div class="step">Breakthrough Results</div>                    </div>                                        <h3>📈 Dataset Improvement:</h3>                    <table class="comparison-table">                        <thead>                            <tr>                                <th>Dataset</th>                                <th>Neutral %</th>                                <th>Non-Neutral %</th>                                <th>Balance Quality</th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td><strong>Original</strong></td>                                <td>82.1%</td>                                <td>17.9%</td>                                <td class="degradation">Poor</td>                            </tr>                            <tr>                                <td><strong>Combined</strong></td>                                <td>72.5%</td>                                <td>27.5%</td>                                <td class="improvement">Better</td>                            </tr>                        </tbody>                    </table>                                        <h3>🎯 Breakthrough Results:</h3>                    <div class="metric-grid">                        <div class="metric-card">                            <h3>87.9%</h3>                            <p>Accuracy <span class="badge success">+6.4%</span></p>                        </div>                        <div class="metric-card">                            <h3>0.872</h3>                            <p>Precision <span class="badge success">INFINITE ↑</span></p>                        </div>                        <div class="metric-card">                            <h3>0.679</h3>                            <p>Recall <span class="badge success">INFINITE ↑</span></p>                        </div>                    </div>                                        <div class="result-box">                        <h3>🎉 Mission Accomplished!</h3>                        <p>The retrained model now actually detects emotions instead of always predicting neutral. This demonstrates how proper data engineering can solve fundamental AI problems.</p>                    </div>                                        <div class="chart-container">                        <canvas id="improvementChart"></canvas>                    </div>                </div>            </div>        </div>        <!-- PART 2: TEXT SUMMARIZATION -->        <div id="summarization" class="section">                        <!-- Question 2.1: Length Analysis -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">2.1</span>CNN DailyMail Dataset Analysis</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>❓ What we needed to do:</h3>                    <p>Analyze article and highlights lengths in the CNN DailyMail dataset.</p>                                        <div class="code-block"># Analyze dataset lengthsdataset['article_len'] = dataset['article'].str.len()dataset['highlights_len'] = dataset['highlights'].str.len()print(f"Average article length: {dataset['article_len'].mean():.0f} characters")print(f"Average highlights length: {dataset['highlights_len'].mean():.0f} characters")                    </div>                                        <h3>📊 Key Statistics:</h3>                    <div class="metric-grid">                        <div class="metric-card">                            <h3>3,530</h3>                            <p>Avg Article Length (chars)</p>                        </div>                        <div class="metric-card">                            <h3>252</h3>                            <p>Avg Highlights Length (chars)</p>                        </div>                        <div class="metric-card">                            <h3>14:1</h3>                            <p>Compression Ratio</p>                        </div>                        <div class="metric-card">                            <h3>7.1%</h3>                            <p>Summary vs Original</p>                        </div>                    </div>                                        <div class="insight-box">                        <h4>📊 Statistical Insight</h4>                        <p>Headlines compress articles by ~14x while maintaining key information. This dramatic compression demonstrates the power of effective summarization.</p>                    </div>                </div>            </div>            <!-- Question 2.2: Distribution Analysis -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">2.2</span>Length Distribution Histograms</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>📈 What we found:</h3>                    <p>Created side-by-side histograms showing the dramatic difference in length distributions.</p>                                        <div class="chart-container">                        <canvas id="lengthHistogram"></canvas>                    </div>                                        <table class="comparison-table">                        <thead>                            <tr>                                <th>Content Type</th>                                <th>Distribution Shape</th>                                <th>Peak Range</th>                                <th>Variability</th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td><strong>Articles</strong></td>                                <td>Right-skewed with long tail</td>                                <td>2,000-4,000 chars</td>
+<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>NLP Project 3 - Interactive Results Showcase | Ariel Soothy</title>    <link rel="stylesheet" href="styles.css">    <link rel="stylesheet" href="visualizations.css">    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>    <style>        body {            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;            margin: 0;            padding: 0;            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);            min-height: 100vh;        }                .notebook-container {            max-width: 1200px;            margin: 0 auto;            padding: 20px;        }                .project-header {            text-align: center;            color: white;            margin-bottom: 40px;        }                .project-header h1 {            font-size: 3em;            margin: 0;            background: linear-gradient(45deg, #ffd700, #ffed4e);            background-clip: text;            -webkit-background-clip: text;            -webkit-text-fill-color: transparent;            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);        }                .project-header p {            font-size: 1.2em;            margin: 10px 0;            opacity: 0.9;        }                .nav-pills {            display: flex;            justify-content: center;            margin: 30px 0;            gap: 10px;            flex-wrap: wrap;        }                .nav-pill {            background: rgba(255, 255, 255, 0.2);            color: white;            padding: 12px 24px;            border-radius: 25px;            cursor: pointer;            transition: all 0.3s ease;            border: 2px solid transparent;            font-weight: 500;        }                .nav-pill:hover {            background: rgba(255, 255, 255, 0.3);            transform: translateY(-2px);        }                .nav-pill.active {            background: linear-gradient(45deg, #ff6b6b, #ee5a24);            border-color: rgba(255, 255, 255, 0.5);            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);        }                .section {            display: none;        }                .section.active {            display: block;        }                .notebook-cell {            background: rgba(255, 255, 255, 0.95);            margin: 20px 0;            border-radius: 15px;            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);            backdrop-filter: blur(4px);            border: 1px solid rgba(255, 255, 255, 0.18);            overflow: hidden;            transition: transform 0.3s ease;        }                .notebook-cell:hover {            transform: translateY(-5px);        }                .cell-header {            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);            color: white;            padding: 15px 20px;            font-weight: bold;            cursor: pointer;            display: flex;            justify-content: space-between;            align-items: center;            transition: all 0.3s ease;        }                .cell-header:hover {            background: linear-gradient(90deg, #3d8bfe 0%, #00d2fe 100%);        }                .cell-header i {            transition: transform 0.3s ease;        }                .cell-header.expanded i {            transform: rotate(180deg);        }                .cell-content {            padding: 20px;            display: none;            animation: slideDown 0.3s ease;        }                .cell-content.active {            display: block;        }                @keyframes slideDown {            from { opacity: 0; transform: translateY(-10px); }            to { opacity: 1; transform: translateY(0); }        }                .question-number {            background: linear-gradient(45deg, #ff6b6b, #ee5a24);            color: white;            border-radius: 50%;            width: 30px;            height: 30px;            display: inline-flex;            align-items: center;            justify-content: center;            font-weight: bold;            margin-right: 10px;        }                .code-block {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: #e2e8f0;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+            font-family: 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .code-header {
+            background: linear-gradient(90deg, #4c51bf 0%, #667eea 100%);
+            color: white;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-language {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .code-content {
+            padding: 20px;
+            overflow-x: auto;
+            line-height: 1.7;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .code-content pre {
+            margin: 0;
+            padding: 0;
+            background: none;
+            border: none;
+            font-size: 0.95em;
+        }
+
+        .code-line {
+            display: block;
+            padding: 2px 0;
+            border-radius: 3px;
+            transition: background-color 0.2s ease;
+        }
+
+        .code-line:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .line-number {
+            display: inline-block;
+            width: 30px;
+            color: #718096;
+            text-align: right;
+            margin-right: 15px;
+            user-select: none;
+            font-size: 0.85em;
+        }
+
+        /* Enhanced syntax highlighting */
+        .keyword { color: #ff6b6b; font-weight: 600; }
+        .string { color: #68d391; }
+        .comment { color: #a0aec0; font-style: italic; }
+        .function { color: #63b3ed; }
+        .variable { color: #fbb6ce; }
+        .number { color: #f6ad55; }
+        .operator { color: #e2e8f0; }
+
+        /* Simple code blocks (for inline code) */
+        .code-block-simple {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            line-height: 1.7;
+            border-left: 4px solid #4c51bf;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .code-block-simple::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #68d391;
+            box-shadow: -20px 0 0 #f6ad55, -40px 0 0 #ff6b6b;
+        }
+
+        /* Code block animations and enhancements */
+        .code-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .code-content {
+            position: relative;
+        }
+
+        .code-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #4c51bf, #667eea, #f093fb);
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .code-block:hover .code-content::before {
+            opacity: 1;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 200% 0; }
+            50% { background-position: -200% 0; }
+        }
+
+        /* Enhanced scrollbar for code blocks */
+        .code-content::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+
+        .code-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .code-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #4c51bf, #667eea);
+            border-radius: 4px;
+        }
+
+        .code-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(90deg, #3730a3, #5b21b6);
+        }
+
+        /* Terminal-style cursor blink effect */
+        .cursor-blink::after {
+            content: '▋';
+            color: #68d391;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }                .result-box {            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);            color: white;            border-radius: 8px;            padding: 15px;            margin: 15px 0;        }                .metric-grid {            display: grid;            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));            gap: 15px;            margin: 20px 0;        }                .metric-card {            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);            color: white;            padding: 20px;            border-radius: 10px;            text-align: center;            transition: transform 0.3s ease;        }                .metric-card:hover {            transform: scale(1.05);        }                .metric-card h3 {            margin: 0 0 10px 0;            font-size: 2em;        }                .metric-card p {            margin: 0;            opacity: 0.9;        }                .comparison-table {            width: 100%;            border-collapse: collapse;            margin: 20px 0;            background: white;            border-radius: 8px;            overflow: hidden;            box-shadow: 0 4px 15px rgba(0,0,0,0.1);        }                .comparison-table th {            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);            color: white;            padding: 15px;            text-align: left;        }                .comparison-table td {            padding: 12px 15px;            border-bottom: 1px solid #e2e8f0;        }                .comparison-table tr:hover {            background: #f8f9fa;        }                .improvement {            color: #22c55e;            font-weight: bold;        }                .degradation {            color: #ef4444;            font-weight: bold;        }                .chart-container {            position: relative;            height: 400px;            margin: 20px 0;            background: white;            border-radius: 8px;            padding: 20px;        }                .insight-box {            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);            border-radius: 8px;            padding: 20px;            margin: 15px 0;            border-left: 5px solid #f59e0b;        }                .insight-box h4 {            margin: 0 0 10px 0;            color: #92400e;        }                .insight-box p {            margin: 0;            color: #451a03;        }                .architecture-diagram {            background: white;            border-radius: 8px;            padding: 20px;            margin: 20px 0;            text-align: center;        }                .step-indicator {            display: flex;            justify-content: space-between;            align-items: center;            margin: 20px 0;            flex-wrap: wrap;        }                .step {            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);            color: white;            padding: 10px 20px;            border-radius: 25px;            font-size: 0.9em;            position: relative;            margin: 5px;        }                .step::after {            content: '→';            position: absolute;            right: -25px;            top: 50%;            transform: translateY(-50%);            color: #667eea;            font-weight: bold;        }                .step:last-child::after {            display: none;        }                .badge {            display: inline-block;            background: linear-gradient(45deg, #ff6b6b, #ee5a24);            color: white;            padding: 4px 12px;            border-radius: 12px;            font-size: 0.8em;            font-weight: bold;            margin: 0 5px;        }                .badge.success {            background: linear-gradient(45deg, #22c55e, #16a34a);        }                .badge.warning {            background: linear-gradient(45deg, #f59e0b, #d97706);        }                .progress-bar {            width: 100%;            height: 20px;            background: #e2e8f0;            border-radius: 10px;            overflow: hidden;            margin: 10px 0;        }                .progress-fill {            height: 100%;            background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);            transition: width 2s ease;        }                @media (max-width: 768px) {            .nav-pills {                flex-direction: column;            }                        .step-indicator {                flex-direction: column;            }                        .step::after {                display: none;            }                        .project-header h1 {                font-size: 2em;            }        }    </style></head><body>    <div class="notebook-container">        <!-- Project Header -->        <div class="project-header">            <h1>🧠 NLP Project 3</h1>            <p><strong>Student:</strong> Ariel Soothy | <strong>Date:</strong> June 2025</p>            <p>Comprehensive Natural Language Processing Analysis</p>        </div>        <!-- Navigation Pills -->        <div class="nav-pills">            <div class="nav-pill active" onclick="showSection('classification')">                <i class="fas fa-brain"></i> Part 1: Text Classification            </div>            <div class="nav-pill" onclick="showSection('summarization')">                <i class="fas fa-compress-alt"></i> Part 2: Text Summarization            </div>            <div class="nav-pill" onclick="showSection('retrieval')">                <i class="fas fa-search"></i> Part 3: Information Retrieval            </div>        </div>        <!-- PART 1: TEXT CLASSIFICATION -->        <div id="classification" class="section active">                        <!-- Question 1.1: Dataset Analysis -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">1.1</span>Dataset Analysis & Emotion Distribution</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>❓ What we needed to do:</h3>                    <p>Analyze the emotion dataset and create a pie chart showing the distribution of emotions.</p>                                        <h3>🔧 What we did:</h3>                    <div class="code-block">
+                        <div class="code-header">
+                            <span><i class="fas fa-code"></i> Data Analysis</span>
+                            <div>
+                                <span class="code-language">Python</span>
+                                <button class="copy-button" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="comment"># Load and analyze the dataset</span>
+<span class="variable">dataset</span> = <span class="function">pd.read_csv</span>(<span class="string">'text.csv'</span>)
+<span class="variable">emotion_counts</span> = <span class="variable">dataset</span>[<span class="string">'emotions'</span>].<span class="function">value_counts</span>()
+
+<span class="comment"># Create pie chart</span>
+<span class="function">plt.figure</span>(<span class="variable">figsize</span>=(<span class="number">10</span>, <span class="number">8</span>))
+<span class="function">plt.pie</span>(<span class="variable">emotion_counts</span>.<span class="variable">values</span>, <span class="variable">labels</span>=<span class="variable">emotion_counts</span>.<span class="variable">index</span>, <span class="variable">autopct</span>=<span class="string">'%1.1f%%'</span>)
+<span class="function">plt.title</span>(<span class="string">'Emotion Distribution in Dataset'</span>)</code></pre>
+                        </div>
+                    </div>                                        <h3>📊 Results:</h3>                    <div class="metric-grid">                        <div class="metric-card">                            <h3>82.1%</h3>                            <p>Neutral Emotions</p>                        </div>                        <div class="metric-card">                            <h3>17.9%</h3>                            <p>Non-Neutral Emotions</p>                        </div>                        <div class="metric-card">                            <h3>10,000</h3>                            <p>Total Samples</p>                        </div>                    </div>                                        <div class="chart-container">                        <canvas id="emotionChart"></canvas>                    </div>                                        <div class="insight-box">                        <h4>🔍 Key Insight</h4>                        <p>The dataset shows severe class imbalance with 82.1% neutral emotions. This creates a major challenge for machine learning models, which we'll explore in the next questions.</p>                    </div>                </div>            </div>            <!-- Question 1.2: Metrics Explanation -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">1.2</span>Why Precision & Recall Beat Accuracy</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>❓ What we needed to explain:</h3>                    <p>Why precision and recall are better metrics than accuracy for this imbalanced dataset.</p>                                        <h3>📈 Our analysis:</h3>                    <div class="step-indicator">                        <div class="step">Class Imbalance Problem</div>                        <div class="step">Accuracy Deception</div>                        <div class="step">Precision & Recall Truth</div>                    </div>                                        <table class="comparison-table">                        <thead>                            <tr>                                <th>Metric</th>                                <th>Definition</th>                                <th>Problem with Accuracy</th>                                <th>Why P&R are Better</th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td><strong>Accuracy</strong></td>                                <td>Correct predictions / Total predictions</td>                                <td>82% by always predicting "neutral"</td>                                <td>Misleading for imbalanced data</td>                            </tr>                            <tr>                                <td><strong>Precision</strong></td>                                <td>True Positives / (TP + False Positives)</td>                                <td>0% - never detects emotions</td>                                <td>Shows actual detection quality</td>                            </tr>                            <tr>                                <td><strong>Recall</strong></td>                                <td>True Positives / (TP + False Negatives)</td>                                <td>0% - misses all emotions</td>                                <td>Shows coverage of actual emotions</td>                            </tr>                        </tbody>                    </table>                                        <div class="insight-box">                        <h4>💡 Key Learning</h4>                        <p>A model that always predicts "neutral" gets 82% accuracy but 0% precision and recall. This shows accuracy can be completely misleading with imbalanced data!</p>                    </div>                </div>            </div>            <!-- Question 1.3: Initial Model Results -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">1.3</span>Initial Model Training Results</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>🔧 What we did:</h3>                    <p>Trained a DistilBERT model on the original dataset and analyzed its performance.</p>                                        <div class="code-block">
+                            <div class="code-header">
+                                <span><i class="fas fa-robot"></i> Model Training</span>
+                                <div>
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-button" onclick="copyCode(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="code-content">
+                                <pre><code><span class="comment"># Train DistilBERT model</span>
+<span class="variable">model</span> = <span class="function">DistilBertForSequenceClassification.from_pretrained</span>(
+    <span class="string">'distilbert-base-uncased'</span>, 
+    <span class="variable">num_labels</span>=<span class="number">2</span>
+)
+
+<span class="variable">trainer</span> = <span class="function">Trainer</span>(
+    <span class="variable">model</span>=<span class="variable">model</span>, 
+    <span class="variable">args</span>=<span class="variable">training_args</span>,
+    <span class="variable">train_dataset</span>=<span class="variable">train_dataset</span>,
+    <span class="variable">eval_dataset</span>=<span class="variable">test_dataset</span>
+)
+
+<span class="variable">trainer</span>.<span class="function">train</span>()</code></pre>
+                            </div>
+                        </div>                                        <h3>😱 Results - The Model's Shocking Behavior:</h3>                    <div class="metric-grid">                        <div class="metric-card">                            <h3>81.5%</h3>                            <p>Test Accuracy <span class="badge warning">Misleading!</span></p>                        </div>                        <div class="metric-card">                            <h3>0.000</h3>                            <p>Precision <span class="badge">Broken!</span></p>                        </div>                        <div class="metric-card">                            <h3>0.000</h3>                            <p>Recall <span class="badge">Broken!</span></p>                        </div>                    </div>                                        <h3>🧮 Confusion Matrix Analysis:</h3>                    <table class="comparison-table">                        <thead>                            <tr>                                <th>Predicted</th>                                <th>Actual Neutral</th>                                <th>Actual Non-Neutral</th>                                <th>Total</th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td><strong>Neutral</strong></td>                                <td>1,605 ✅</td>                                <td>364 ❌</td>                                <td>1,969</td>                            </tr>                            <tr>                                <td><strong>Non-Neutral</strong></td>                                <td>0</td>                                <td>0</td>                                <td>0</td>                            </tr>                        </tbody>                    </table>                                        <div class="insight-box">                        <h4>🚨 Critical Discovery</h4>                        <p>The model NEVER predicts non-neutral emotions! It learned to always predict "neutral" due to class imbalance. This is a classic example of how AI can learn the wrong pattern.</p>                    </div>                </div>            </div>            <!-- Questions 1.4-1.5: Cross-Dataset Evaluation -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">1.4-1.5</span>Cross-Dataset Testing Reveals Model Bias</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>❓ What we needed to do:</h3>                    <p>Test our broken model on different datasets to understand its limitations.</p>                                        <h3>📊 Testing Results:</h3>                    <table class="comparison-table">                        <thead>                            <tr>                                <th>Dataset</th>                                <th>Accuracy</th>                                <th>What Actually Happened</th>                                <th>Pattern Discovered</th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td><strong>Emotions Dataset</strong></td>                                <td class="degradation">0%</td>                                <td>Model predicted neutral, all truth was non-neutral</td>                                <td>100% wrong predictions</td>                            </tr>                            <tr>                                <td><strong>Sentiment Dataset</strong></td>                                <td class="degradation">46%</td>                                <td>Model predicted neutral, 54% truth was non-neutral</td>                                <td>Performance = % neutral in test set</td>                            </tr>                        </tbody>                    </table>                                        <div class="chart-container">                        <canvas id="crossDatasetChart"></canvas>                    </div>                                        <div class="insight-box">                        <h4>🔬 Breakthrough Understanding</h4>                        <p>The model's accuracy on any dataset equals the percentage of neutral samples in that dataset! This proves the model learned dataset statistics, not emotion patterns.</p>                    </div>                </div>            </div>            <!-- Question 1.6: Advanced Solution -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">1.6</span>🚀 Advanced Solution: Multi-Dataset Retraining</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>🧠 What we did (Advanced):</h3>                    <p>Combined multiple datasets to create better class balance and retrained the model.</p>                                        <div class="step-indicator">                        <div class="step">Combine Datasets</div>                        <div class="step">Improve Balance</div>                        <div class="step">Retrain Model</div>                        <div class="step">Breakthrough Results</div>                    </div>                                        <h3>📈 Dataset Improvement:</h3>                    <table class="comparison-table">                        <thead>                            <tr>                                <th>Dataset</th>                                <th>Neutral %</th>                                <th>Non-Neutral %</th>                                <th>Balance Quality</th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td><strong>Original</strong></td>                                <td>82.1%</td>                                <td>17.9%</td>                                <td class="degradation">Poor</td>                            </tr>                            <tr>                                <td><strong>Combined</strong></td>                                <td>72.5%</td>                                <td>27.5%</td>                                <td class="improvement">Better</td>                            </tr>                        </tbody>                    </table>                                        <h3>🎯 Breakthrough Results:</h3>                    <div class="metric-grid">                        <div class="metric-card">                            <h3>87.9%</h3>                            <p>Accuracy <span class="badge success">+6.4%</span></p>                        </div>                        <div class="metric-card">                            <h3>0.872</h3>                            <p>Precision <span class="badge success">INFINITE ↑</span></p>                        </div>                        <div class="metric-card">                            <h3>0.679</h3>                            <p>Recall <span class="badge success">INFINITE ↑</span></p>                        </div>                    </div>                                        <div class="result-box">                        <h3>🎉 Mission Accomplished!</h3>                        <p>The retrained model now actually detects emotions instead of always predicting neutral. This demonstrates how proper data engineering can solve fundamental AI problems.</p>                    </div>                                        <div class="chart-container">                        <canvas id="improvementChart"></canvas>                    </div>                </div>            </div>        </div>        <!-- PART 2: TEXT SUMMARIZATION -->        <div id="summarization" class="section">                        <!-- Question 2.1: Length Analysis -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">2.1</span>CNN DailyMail Dataset Analysis</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>❓ What we needed to do:</h3>                    <p>Analyze article and highlights lengths in the CNN DailyMail dataset.</p>                                        <div class="code-block">
+                            <div class="code-header">
+                                <span><i class="fas fa-chart-bar"></i> Length Analysis</span>
+                                <div>
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-button" onclick="copyCode(this)">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="code-content">
+                                <pre><code><span class="comment"># Analyze dataset lengths</span>
+<span class="variable">dataset</span>[<span class="string">'article_len'</span>] = <span class="variable">dataset</span>[<span class="string">'article'</span>].<span class="variable">str</span>.<span class="function">len</span>()
+<span class="variable">dataset</span>[<span class="string">'highlights_len'</span>] = <span class="variable">dataset</span>[<span class="string">'highlights'</span>].<span class="variable">str</span>.<span class="function">len</span>()
+
+<span class="function">print</span>(<span class="string">f"Average article length: {dataset['article_len'].mean():.0f} characters"</span>)
+<span class="function">print</span>(<span class="string">f"Average highlights length: {dataset['highlights_len'].mean():.0f} characters"</span>)</code></pre>
+                            </div>
+                        </div>                                        <h3>📊 Key Statistics:</h3>                    <div class="metric-grid">                        <div class="metric-card">                            <h3>3,530</h3>                            <p>Avg Article Length (chars)</p>                        </div>                        <div class="metric-card">                            <h3>252</h3>                            <p>Avg Highlights Length (chars)</p>                        </div>                        <div class="metric-card">                            <h3>14:1</h3>                            <p>Compression Ratio</p>                        </div>                        <div class="metric-card">                            <h3>7.1%</h3>                            <p>Summary vs Original</p>                        </div>                    </div>                                        <div class="insight-box">                        <h4>📊 Statistical Insight</h4>                        <p>Headlines compress articles by ~14x while maintaining key information. This dramatic compression demonstrates the power of effective summarization.</p>                    </div>                </div>            </div>            <!-- Question 2.2: Distribution Analysis -->            <div class="notebook-cell">                <div class="cell-header" onclick="toggleCell(this)">                    <span><span class="question-number">2.2</span>Length Distribution Histograms</span>                    <i class="fas fa-chevron-down"></i>                </div>                <div class="cell-content">                    <h3>📈 What we found:</h3>                    <p>Created side-by-side histograms showing the dramatic difference in length distributions.</p>                                        <div class="chart-container">                        <canvas id="lengthHistogram"></canvas>                    </div>                                        <table class="comparison-table">                        <thead>                            <tr>                                <th>Content Type</th>                                <th>Distribution Shape</th>                                <th>Peak Range</th>                                <th>Variability</th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td><strong>Articles</strong></td>                                <td>Right-skewed with long tail</td>                                <td>2,000-4,000 chars</td>
                                 <td>High (outliers to 10K+)</td>
                             </tr>
                             <tr>
@@ -23,16 +273,27 @@
                     <p>Built ROUGE-N evaluation from scratch (no external libraries).</p>
                     
                     <div class="code-block">
-def calculate_rouge_n(generated, reference, n=1):
-    """Custom ROUGE-N implementation"""
-    generated_ngrams = set(nltk.ngrams(generated.split(), n))
-    reference_ngrams = set(nltk.ngrams(reference.split(), n))
+                        <div class="code-header">
+                            <span><i class="fas fa-calculator"></i> ROUGE Implementation</span>
+                            <div>
+                                <span class="code-language">Python</span>
+                                <button class="copy-button" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="keyword">def</span> <span class="function">calculate_rouge_n</span>(<span class="variable">generated</span>, <span class="variable">reference</span>, <span class="variable">n</span>=<span class="number">1</span>):
+    <span class="string">"""Custom ROUGE-N implementation"""</span>
+    <span class="variable">generated_ngrams</span> = <span class="function">set</span>(<span class="function">nltk.ngrams</span>(<span class="variable">generated</span>.<span class="function">split</span>(), <span class="variable">n</span>))
+    <span class="variable">reference_ngrams</span> = <span class="function">set</span>(<span class="function">nltk.ngrams</span>(<span class="variable">reference</span>.<span class="function">split</span>(), <span class="variable">n</span>))
     
-    if len(reference_ngrams) == 0:
-        return 0.0
+    <span class="keyword">if</span> <span class="function">len</span>(<span class="variable">reference_ngrams</span>) == <span class="number">0</span>:
+        <span class="keyword">return</span> <span class="number">0.0</span>
     
-    overlap = generated_ngrams.intersection(reference_ngrams)
-    return len(overlap) / len(reference_ngrams)
+    <span class="variable">overlap</span> = <span class="variable">generated_ngrams</span>.<span class="function">intersection</span>(<span class="variable">reference_ngrams</span>)
+    <span class="keyword">return</span> <span class="function">len</span>(<span class="variable">overlap</span>) / <span class="function">len</span>(<span class="variable">reference_ngrams</span>)</code></pre>
+                        </div>
                     </div>
                     
                     <h3>📊 Ground Truth ROUGE Analysis:</h3>
@@ -100,20 +361,31 @@ def calculate_rouge_n(generated, reference, n=1):
                     <p>Built a semantic search system using DistilBERT embeddings and cosine similarity.</p>
                     
                     <div class="code-block">
-def find_most_relevant_article(query_embedding, dataset, max_num_of_articles=None):
-    """Find most semantically similar article using embeddings"""
-    most_relevant_article = None
-    max_similarity = -1
+                        <div class="code-header">
+                            <span><i class="fas fa-search"></i> Semantic Search Algorithm</span>
+                            <div>
+                                <span class="code-language">Python</span>
+                                <button class="copy-button" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="keyword">def</span> <span class="function">find_most_relevant_article</span>(<span class="variable">query_embedding</span>, <span class="variable">dataset</span>, <span class="variable">max_num_of_articles</span>=<span class="keyword">None</span>):
+    <span class="string">"""Find most semantically similar article using embeddings"""</span>
+    <span class="variable">most_relevant_article</span> = <span class="keyword">None</span>
+    <span class="variable">max_similarity</span> = <span class="operator">-</span><span class="number">1</span>
     
-    for article in dataset:
-        article_embedding = compute_embedding(article['text'])
-        similarity = cosine_similarity(query_embedding, article_embedding)[0][0]
+    <span class="keyword">for</span> <span class="variable">article</span> <span class="keyword">in</span> <span class="variable">dataset</span>:
+        <span class="variable">article_embedding</span> = <span class="function">compute_embedding</span>(<span class="variable">article</span>[<span class="string">'text'</span>])
+        <span class="variable">similarity</span> = <span class="function">cosine_similarity</span>(<span class="variable">query_embedding</span>, <span class="variable">article_embedding</span>)[<span class="number">0</span>][<span class="number">0</span>]
         
-        if similarity > max_similarity:
-            max_similarity = similarity
-            most_relevant_article = article['text']
+        <span class="keyword">if</span> <span class="variable">similarity</span> <span class="operator">></span> <span class="variable">max_similarity</span>:
+            <span class="variable">max_similarity</span> = <span class="variable">similarity</span>
+            <span class="variable">most_relevant_article</span> = <span class="variable">article</span>[<span class="string">'text'</span>]
             
-    return most_relevant_article, max_similarity
+    <span class="keyword">return</span> <span class="variable">most_relevant_article</span>, <span class="variable">max_similarity</span></code></pre>
+                        </div>
                     </div>
                     
                     <div class="step-indicator">
@@ -282,6 +554,31 @@ def find_most_relevant_article(query_embedding, dataset, max_num_of_articles=Non
             
             // Add active to clicked pill
             event.target.closest('.nav-pill').classList.add('active');
+        }
+        
+        // Copy code function
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const codeContent = codeBlock.querySelector('.code-content pre code');
+            const textToCopy = codeContent.textContent;
+            
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                // Visual feedback
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.style.background = 'rgba(34, 197, 94, 0.3)';
+                
+                setTimeout(function() {
+                    button.innerHTML = originalText;
+                    button.style.background = 'rgba(255, 255, 255, 0.1)';
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+                button.innerHTML = '<i class="fas fa-times"></i> Error';
+                setTimeout(function() {
+                    button.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                }, 2000);
+            });
         }
         
         // Initialize charts when page loads
