@@ -1,0 +1,49 @@
+# Large model files and training artifacts
+results/
+results_combined/
+results_analysis/
+
+# Large datasets
+archive*/
+*.csv
+!emotion_sentiment_dataset.csv  # Keep small dataset if needed
+
+# Logs
+logs/
+logs_combined/
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Model files (too large for GitHub)
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.h5
+*.pkl
+*.joblib
+
+# Temporary files
+*.tmp
+*.temp
