@@ -282,9 +282,11 @@ html {
     padding: 20px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
     animation: float 3s ease-in-out infinite;
     transition: transform 0.3s ease;
+    text-align: center;
 }
 
 .floating-card:hover {
