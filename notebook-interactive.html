@@ -627,6 +627,142 @@
                 </div>
             </div>
 
+            <!-- Question 2.5: Advanced Subjective Evaluation -->
+            <div class="notebook-cell">
+                <div class="cell-header" onclick="toggleCell(this)">
+                    <span><span class="question-number">2.5</span>🚀 Advanced: Subjective Evaluation Strategy</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="cell-content">
+                    <h3>🧠 What we designed (Advanced):</h3>
+                    <p>Developed a comprehensive strategy for human-based summarization evaluation to overcome ROUGE limitations.</p>
+                    
+                    <div class="step-indicator">
+                        <div class="step">Identify ROUGE Limits</div>
+                        <div class="step">Design Human Study</div>
+                        <div class="step">Create Criteria</div>
+                        <div class="step">Quantify Results</div>
+                    </div>
+                    
+                    <h3>❌ ROUGE-N Limitations:</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Limitation</th>
+                                <th>Problem</th>
+                                <th>Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>N-gram Bias</strong></td>
+                                <td>Only measures word overlap</td>
+                                <td>Ignores semantic meaning</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Extractive Bias</strong></td>
+                                <td>Favors copying text</td>
+                                <td>Penalizes paraphrasing</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Length Sensitivity</strong></td>
+                                <td>Shorter = lower scores</td>
+                                <td>Quality vs quantity confusion</td>
+                            </tr>
+                            <tr>
+                                <td><strong>No Coherence</strong></td>
+                                <td>Doesn't check readability</td>
+                                <td>Misses flow and logic</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>👥 Proposed Human Evaluation Strategy:</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span><i class="fas fa-users"></i> Study Design</span>
+                            <div>
+                                <span class="code-language">Strategy</span>
+                                <button class="copy-button" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="comment"># Human Evaluation Setup</span>
+<span class="variable">participants</span> = <span class="number">100</span>  <span class="comment"># Mix of experts and general readers</span>
+<span class="variable">articles_per_person</span> = <span class="number">10</span>  <span class="comment"># Each evaluator sees 10 article sets</span>
+<span class="variable">summaries_per_article</span> = <span class="number">3</span>  <span class="comment"># Human, T5-small, T5-large</span>
+
+<span class="comment"># Evaluation Criteria (1-5 scale)</span>
+<span class="variable">criteria</span> = [
+    <span class="string">"informativeness"</span>,    <span class="comment"># Captures key information?</span>
+    <span class="string">"coherence"</span>,         <span class="comment"># Readable and flows well?</span>
+    <span class="string">"conciseness"</span>,       <span class="comment"># Appropriate length?</span>
+    <span class="string">"faithfulness"</span>,      <span class="comment"># No contradictions?</span>
+    <span class="string">"overall_quality"</span>    <span class="comment"># General preference</span>
+]
+
+<span class="comment"># Final Score Formula</span>
+<span class="variable">final_score</span> = (<span class="variable">avg_quality</span> × <span class="number">0.6</span>) + (<span class="variable">preference_rank</span> × <span class="number">0.4</span>)</code></pre>
+                        </div>
+                    </div>
+                    
+                    <h3>📊 Quantization Method:</h3>
+                    <div class="metric-grid">
+                        <div class="metric-card">
+                            <h3>Step 1</h3>
+                            <p>Individual Scores (1-5)</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Step 2</h3>
+                            <p>Consensus Median</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Step 3</h3>
+                            <p>Preference Rankings</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Step 4</h3>
+                            <p>Weighted Combination</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result-box">
+                        <h3>🎯 Final Output</h3>
+                        <p><strong>Subjective Summary Quality Score:</strong> (Average_Quality_Score × 0.6) + (Preference_Ranking × 0.4) = <strong>Score (1-5)</strong></p>
+                        <p>This approach captures semantic quality that ROUGE misses while remaining quantifiable for comparison.</p>
+                    </div>
+
+                    <div class="simplified-explanation">
+                        <h4>🤔 What it means</h4>
+                        <p><strong>In simple terms:</strong> Think of this like reviewing restaurants! 🍽️ Instead of just counting how many words match the menu description (like ROUGE), we ask 100 real diners to taste the food and rate it on flavor, presentation, portion size, and overall experience. Some might be food critics (experts), others just love good food (general readers). We give them scorecards and then average everyone's opinions into one final "deliciousness score." This tells us if the food actually tastes good, not just if it matches the description word-for-word! Our AI summaries get the same treatment - real humans judge if they're actually helpful and well-written! 👨‍🍳✨</p>
+                    </div>
+
+                    <div class="glossary-section">
+                        <h4>📚 Question 2.5 Glossary</h4>
+                        <div class="glossary-grid">
+                            <div class="glossary-term">
+                                <strong>Subjective Evaluation:</strong>
+                                <p>Human-based assessment that captures qualities like readability, informativeness, and preference that automated metrics miss. Like asking people to taste-test rather than just analyzing ingredients.</p>
+                            </div>
+                            <div class="glossary-term">
+                                <strong>Consensus Scoring:</strong>
+                                <p>Combining multiple human opinions into a single reliable score using statistical methods like median or average. Reduces individual bias and increases reliability.</p>
+                            </div>
+                            <div class="glossary-term">
+                                <strong>Inter-annotator Agreement:</strong>
+                                <p>How much human evaluators agree with each other. High agreement means the criteria are clear and the results are trustworthy.</p>
+                            </div>
+                            <div class="glossary-term">
+                                <strong>Blind Evaluation:</strong>
+                                <p>Evaluators don't know which system generated which summary. Prevents bias toward familiar models or human-written content.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- PART 3: INFORMATION RETRIEVAL -->
