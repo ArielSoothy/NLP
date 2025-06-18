@@ -850,14 +850,104 @@
                 </div>
             </div>
 
-            <!-- Question 3.2: Architecture -->
+            <!-- Question 3.2: Query Results -->
             <div class="notebook-cell">
                 <div class="cell-header" onclick="toggleCell(this)">
-                    <span><span class="question-number">3.2</span>Large-Scale Architecture Design</span>
+                    <span><span class="question-number">3.2</span>Query Results & Analysis</span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="cell-content">
-                    <h3>🏗️ Production-Ready Architecture:</h3>
+                    <h3>🔍 What we tested:</h3>
+                    <p>Ran our semantic search system on four different queries using sample Wikipedia-like articles.</p>
+                    
+                    <div class="step-indicator">
+                        <div class="step">Leonardo DiCaprio</div>
+                        <div class="step">France</div>
+                        <div class="step">Python</div>
+                        <div class="step">Deep Learning</div>
+                    </div>
+                    
+                    <h3>📊 Query Results:</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Query</th>
+                                <th>Most Relevant Article</th>
+                                <th>Similarity Score</th>
+                                <th>Analysis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Leonardo DiCaprio</strong></td>
+                                <td>"Leonardo DiCaprio is an American actor and film producer known for his roles in Titanic, Inception, and The Revenant..."</td>
+                                <td><span class="badge success">0.6668</span></td>
+                                <td>Perfect match - exact person</td>
+                            </tr>
+                            <tr>
+                                <td><strong>France</strong></td>
+                                <td>"France is a country in Western Europe known for its culture, cuisine, and landmarks like the Eiffel Tower..."</td>
+                                <td><span class="badge improvement">0.3617</span></td>
+                                <td>Correct geographic content</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Python</strong></td>
+                                <td>"Python is a high-level programming language known for its simplicity and readability..."</td>
+                                <td><span class="badge improvement">0.4740</span></td>
+                                <td>Technical vocabulary handled well</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deep Learning</strong></td>
+                                <td>"Deep learning is a subset of machine learning that uses neural networks with multiple layers..."</td>
+                                <td><span class="badge success">0.5844</span></td>
+                                <td>Excellent AI/ML understanding</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="insight-box">
+                        <h4>🎯 Performance Analysis</h4>
+                        <p>All queries returned semantically correct results! Higher scores for specific entities (Leonardo DiCaprio: 0.67) and technical terms (Deep Learning: 0.58). DistilBERT embeddings effectively captured both person-based and concept-based queries.</p>
+                    </div>
+
+                    <div class="simplified-explanation">
+                        <h4>🤔 What it means</h4>
+                        <p><strong>In simple terms:</strong> Think of this like asking a really smart librarian to find books! 📚 When you ask for "Leonardo DiCaprio," they find the exact biography (high score 0.67). When you ask for "France," they find the geography section (medium score 0.36). When you ask for "Python," they know you mean programming, not snakes! 🐍💻 The AI "understands" context just like a human librarian - it can tell the difference between different meanings of the same word and find exactly what you're looking for. The similarity scores tell us how confident the AI is in its choice! ✨</p>
+                    </div>
+
+                    <div class="glossary-section">
+                        <h4>📚 Question 3.2 Glossary</h4>
+                        <div class="glossary-grid">
+                            <div class="glossary-term-box">
+                                <h5>Semantic Search</h5>
+                                <p>Search that understands meaning and context, not just keyword matching. Like asking "What's that movie with the ship?" and getting Titanic results.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Similarity Score</h5>
+                                <p>A number (0-1) showing how similar two pieces of text are. 1.0 = identical twins, 0.5 = distant cousins, 0.0 = complete strangers.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Entity Recognition</h5>
+                                <p>AI's ability to identify and understand specific things like people, places, or concepts. Like recognizing "Leonardo DiCaprio" as a person, not a place.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Context Understanding</h5>
+                                <p>AI's ability to figure out what you mean based on surrounding information. Knows "Python" in tech context means programming, not animals.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3.3: Advanced Architecture -->
+            <div class="notebook-cell">
+                <div class="cell-header" onclick="toggleCell(this)">
+                    <span><span class="question-number">3.3</span>🚀 Advanced: Large-Scale Architecture Design</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="cell-content">
+                    <h3>🏗️ What we designed (Advanced):</h3>
+                    <p>Architected a production-ready, scalable information retrieval system for web-scale deployment.</p>
                     
                     <div class="architecture-diagram">
                         <h4>🔍 Distributed Search System</h4>
