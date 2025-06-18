@@ -4,7 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NLP Project 3 - Interactive Showcase</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+                           <div class="metric-item">
+                            <span class="metric-label">Accuracy</span>
+                            <span class="metric-value">87.9%</span>
+                            <small class="metric-note">Improved model (vs 81.5% initial)</small>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Precision</span>
+                            <span class="metric-value">87.2%</span>
+                            <small class="metric-note">Multi-dataset training</small>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Recall</span>
+                            <span class="metric-value">67.9%</span>
+                            <small class="metric-note">Emotion detection capability</small>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">F1-Score</span>
+                            <span class="metric-value">76.4%</span>
+                            <small class="metric-note">Balanced performance</small>
+                        </div>ps://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -268,17 +287,20 @@
                     <div class="rouge-metric">
                         <h4>ROUGE-1</h4>
                         <p>Measures unigram overlap between generated and reference summaries</p>
-                        <div class="score">Score: 0.847</div>
+                        <div class="score">Score: 0.788</div>
+                        <small class="score-note">Ground truth mean</small>
                     </div>
                     <div class="rouge-metric">
                         <h4>ROUGE-2</h4>
                         <p>Measures bigram overlap, indicating fluency and coherence</p>
-                        <div class="score">Score: 0.723</div>
+                        <div class="score">Score: 0.356</div>
+                        <small class="score-note">Ground truth (T5: 0.091)</small>
                     </div>
                     <div class="rouge-metric">
-                        <h4>ROUGE-L</h4>
-                        <p>Measures longest common subsequence, capturing sentence structure</p>
-                        <div class="score">Score: 0.795</div>
+                        <h4>Model Comparison</h4>
+                        <p>T5-small vs Human highlights performance analysis</p>
+                        <div class="score">T5: Lower 10/10</div>
+                        <small class="score-note">All cases below ground truth</small>
                     </div>
                 </div>
             </div>
@@ -378,19 +400,23 @@
                     <div class="insights-list">
                         <div class="insight-item">
                             <i class="fas fa-lightbulb"></i>
-                            <span>DistilBERT achieved 92.4% accuracy on emotion classification</span>
+                            <span>Initial model always predicted neutral (81.5% accuracy, 0% emotion detection)</span>
                         </div>
                         <div class="insight-item">
                             <i class="fas fa-lightbulb"></i>
-                            <span>T5-small generated summaries with ROUGE-2 score of 0.723</span>
+                            <span>Multi-dataset training improved accuracy to 87.9% with actual emotion detection</span>
                         </div>
                         <div class="insight-item">
                             <i class="fas fa-lightbulb"></i>
-                            <span>Semantic search retrieved relevant articles with 89% precision</span>
+                            <span>T5-small scored lower than ground truth in all 10 test cases (ROUGE-2: 0.091 vs 0.356)</span>
                         </div>
                         <div class="insight-item">
                             <i class="fas fa-lightbulb"></i>
-                            <span>Multi-dataset training improved generalization by 7%</span>
+                            <span>Semantic search achieved high similarity scores for specific queries (0.67 for Leonardo DiCaprio)</span>
+                        </div>
+                        <div class="insight-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Class imbalance was the main challenge, solved through dataset combination and retraining</span>
                         </div>
                     </div>
                 </div>

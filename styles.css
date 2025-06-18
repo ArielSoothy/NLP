@@ -487,6 +487,21 @@ body {
     color: #667eea;
 }
 
+.metric-note {
+    color: #666;
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 4px;
+}
+
+.score-note {
+    color: #666;
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 4px;
+    display: block;
+}
+
 /* ROUGE Section */
 .rouge-section {
     background: white;
