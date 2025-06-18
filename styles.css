@@ -56,6 +56,18 @@ html {
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 13px;
+    font-family: inherit;
+}
+
+.btn:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
 }
 
 .btn-primary {
@@ -118,9 +130,17 @@ html {
     right: 0;
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
+    background: white; /* Fallback for browsers without backdrop-filter support */
     backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid #e2e8f0;
+}
+
+/* Modern browsers with backdrop-filter support */
+@supports (backdrop-filter: blur(10px)) {
+    .navbar {
+        background: rgba(255, 255, 255, 0.95);
+    }
 }
 
 .nav-container {
@@ -168,6 +188,19 @@ html {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    z-index: 1001;
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 .bar {
@@ -414,6 +447,18 @@ html {
     justify-content: center;
     color: #718096;
     font-size: 0.9rem;
+}
+
+.demo-result.loading {
+    background: #edf2f7;
+    color: #4a5568;
+}
+
+.demo-result .loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #667eea;
 }
 
 /* Architecture Diagram */
@@ -806,10 +851,15 @@ html {
         transition: 0.3s;
         box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
         padding: 20px 0;
+        z-index: 1000;
     }
     
     .nav-menu.active {
         left: 0;
+    }
+    
+    .nav-menu li {
+        margin: 10px 0;
     }
     
     .hero-container {
@@ -857,7 +907,7 @@ html {
     }
     
     .section-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .hero-buttons {
@@ -867,5 +917,26 @@ html {
     
     .overview-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 0 16px;
+    }
+    
+    .hero {
+        padding: 100px 0 40px;
+    }
+    
+    .section {
+        padding: 40px 0;
+    }
+    
+    .floating-card {
+        padding: 16px;
+        font-size: 0.9rem;
+    }
+    
+    .floating-card i {
+        font-size: 1.5rem;
     }
 }

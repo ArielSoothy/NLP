@@ -5,12 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     hamburger.addEventListener('click', function() {
         navMenu.classList.toggle('active');
+        hamburger.classList.toggle('active');
     });
     
     // Close mobile menu when clicking on a link
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function() {
             navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
         });
     });
     
@@ -53,19 +55,26 @@ const mockArticles = [
 document.getElementById('classifyBtn')?.addEventListener('click', function() {
     const text = document.getElementById('classificationInput').value.trim();
     const resultDiv = document.getElementById('classificationResult');
+    const button = this;
     
     if (!text) {
         resultDiv.innerHTML = '<p style="color: #e53e3e;">Please enter some text to analyze.</p>';
         return;
     }
     
-    // Show loading state
+    // Disable button and show loading state
+    button.disabled = true;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
     resultDiv.innerHTML = '<div class="loading">Analyzing emotions... <i class="fas fa-spinner fa-spin"></i></div>';
     
     // Simulate API call
     setTimeout(() => {
         const emotions = generateMockEmotionResults(text);
         displayEmotionResults(emotions, resultDiv);
+        
+        // Reset button
+        button.disabled = false;
+        button.innerHTML = '<i class="fas fa-magic"></i> Analyze Emotions';
     }, 1500);
 });
 
@@ -167,6 +176,7 @@ document.getElementById('summarizeBtn')?.addEventListener('click', function() {
     const text = document.getElementById('summarizationInput').value.trim();
     const length = document.getElementById('summaryLength').value;
     const resultDiv = document.getElementById('summarizationResult');
+    const button = this;
     
     if (!text) {
         resultDiv.innerHTML = '<p style="color: #e53e3e;">Please enter some text to summarize.</p>';
@@ -178,13 +188,19 @@ document.getElementById('summarizeBtn')?.addEventListener('click', function() {
         return;
     }
     
-    // Show loading state
+    // Disable button and show loading state
+    button.disabled = true;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
     resultDiv.innerHTML = '<div class="loading">Generating summary... <i class="fas fa-spinner fa-spin"></i></div>';
     
     // Simulate API call
     setTimeout(() => {
         const summary = generateMockSummary(text, length);
         displaySummaryResults(summary, text, resultDiv);
+        
+        // Reset button
+        button.disabled = false;
+        button.innerHTML = '<i class="fas fa-compress"></i> Generate Summary';
     }, 2000);
 });
 
@@ -251,19 +267,26 @@ function displaySummaryResults(summary, originalText, container) {
 document.getElementById('searchBtn')?.addEventListener('click', function() {
     const query = document.getElementById('searchInput').value.trim();
     const resultDiv = document.getElementById('searchResults');
+    const button = this;
     
     if (!query) {
         resultDiv.innerHTML = '<p style="color: #e53e3e;">Please enter a search query.</p>';
         return;
     }
     
-    // Show loading state
+    // Disable button and show loading state
+    button.disabled = true;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
     resultDiv.innerHTML = '<div class="loading">Searching Wikipedia... <i class="fas fa-spinner fa-spin"></i></div>';
     
     // Simulate API call
     setTimeout(() => {
         const results = generateMockSearchResults(query);
         displaySearchResults(results, resultDiv);
+        
+        // Reset button
+        button.disabled = false;
+        button.innerHTML = '<i class="fas fa-search"></i> Search';
     }, 1500);
 });
 
@@ -874,3 +897,60 @@ const additionalCSS = `
 const style = document.createElement('style');
 style.textContent = additionalCSS;
 document.head.appendChild(style);
+
+// Initialize charts when Chart.js is available
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof Chart !== 'undefined') {
+        initializeCharts();
+    } else {
+        console.warn('Chart.js not loaded - charts will not be displayed');
+    }
+});
+
+function initializeCharts() {
+    // Initialize emotion chart if canvas exists
+    const emotionCanvas = document.getElementById('emotionChart');
+    if (emotionCanvas) {
+        new Chart(emotionCanvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Joy', 'Sadness', 'Anger', 'Fear', 'Surprise', 'Disgust'],
+                datasets: [{
+                    data: [30, 20, 15, 10, 15, 10],
+                    backgroundColor: [
+                        '#FFD700', '#4A90E2', '#E53E3E', '#FF8C00',
+                        '#9F7AEA', '#38A169'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    }
+}
+
+// Add keyboard support for demo inputs
+document.getElementById('classificationInput')?.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter' && e.ctrlKey) {
+        document.getElementById('classifyBtn')?.click();
+    }
+});
+
+document.getElementById('summarizationInput')?.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter' && e.ctrlKey) {
+        document.getElementById('summarizeBtn')?.click();
+    }
+});
+
+document.getElementById('searchInput')?.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        document.getElementById('searchBtn')?.click();
+    }
+});
