@@ -900,11 +900,24 @@ document.head.appendChild(style);
 
 // Initialize charts when Chart.js is available
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof Chart !== 'undefined') {
-        initializeCharts();
-    } else {
-        console.warn('Chart.js not loaded - charts will not be displayed');
-    }
+    // Wait a bit for Chart.js to fully load
+    setTimeout(() => {
+        if (typeof Chart !== 'undefined') {
+            console.log('Chart.js loaded, initializing charts...');
+            initializeCharts();
+        } else {
+            console.warn('Chart.js not loaded - charts will not be displayed');
+            // Show message in chart containers
+            const canvases = ['emotionChart', 'lengthChart', 'performanceChart', 'trainingChart', 'similarityChart'];
+            canvases.forEach(id => {
+                const canvas = document.getElementById(id);
+                if (canvas) {
+                    const parent = canvas.parentElement;
+                    parent.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 250px; color: #718096; font-size: 0.9rem;"><i class="fas fa-chart-bar" style="margin-right: 8px;"></i>Chart loading...</div>';
+                }
+            });
+        }
+    }, 500);
 });
 
 function initializeCharts() {
@@ -929,6 +942,120 @@ function initializeCharts() {
                 plugins: {
                     legend: {
                         position: 'bottom'
+                    }
+                }
+            }
+        });
+    }
+
+    // Initialize length chart if canvas exists
+    const lengthCanvas = document.getElementById('lengthChart');
+    if (lengthCanvas) {
+        new Chart(lengthCanvas, {
+            type: 'bar',
+            data: {
+                labels: ['Original Articles', 'Generated Summaries'],
+                datasets: [{
+                    label: 'Average Word Count',
+                    data: [856, 142],
+                    backgroundColor: ['#667eea', '#764ba2']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Initialize performance chart if canvas exists
+    const performanceCanvas = document.getElementById('performanceChart');
+    if (performanceCanvas) {
+        new Chart(performanceCanvas, {
+            type: 'radar',
+            data: {
+                labels: ['Accuracy', 'Precision', 'Recall', 'F1-Score'],
+                datasets: [{
+                    label: 'Initial Model',
+                    data: [81.5, 66.5, 0, 0],
+                    borderColor: '#E53E3E',
+                    backgroundColor: 'rgba(229, 62, 62, 0.2)'
+                }, {
+                    label: 'Improved Model',
+                    data: [87.9, 87.2, 67.9, 76.4],
+                    borderColor: '#38A169',
+                    backgroundColor: 'rgba(56, 161, 105, 0.2)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    }
+
+    // Initialize training progress chart if canvas exists
+    const trainingCanvas = document.getElementById('trainingChart');
+    if (trainingCanvas) {
+        new Chart(trainingCanvas, {
+            type: 'line',
+            data: {
+                labels: ['Epoch 1', 'Epoch 2', 'Epoch 3', 'Epoch 4', 'Epoch 5'],
+                datasets: [{
+                    label: 'Training Loss',
+                    data: [0.8, 0.6, 0.4, 0.3, 0.25],
+                    borderColor: '#E53E3E',
+                    tension: 0.4
+                }, {
+                    label: 'Validation Loss',
+                    data: [0.9, 0.7, 0.5, 0.35, 0.3],
+                    borderColor: '#4A90E2',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Initialize similarity chart if canvas exists
+    const similarityCanvas = document.getElementById('similarityChart');
+    if (similarityCanvas) {
+        new Chart(similarityCanvas, {
+            type: 'bar',
+            data: {
+                labels: ['Leonardo DiCaprio', 'Climate Change', 'Hollywood', 'Deep Learning', 'AI Research'],
+                datasets: [{
+                    label: 'Similarity Score',
+                    data: [0.89, 0.76, 0.72, 0.85, 0.81],
+                    backgroundColor: '#667eea'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1
                     }
                 }
             }

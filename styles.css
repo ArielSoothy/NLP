@@ -92,10 +92,12 @@ html {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #2d3748; /* Fallback color for browsers without gradient support */
+    background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-weight: 700;
 }
 
 
@@ -248,13 +250,15 @@ html {
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero-description {
     font-size: 1.1rem;
     margin-bottom: 24px;
-    opacity: 0.9;
+    opacity: 0.95;
     line-height: 1.5;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .hero-buttons {
