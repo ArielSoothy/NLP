@@ -12,7 +12,19 @@ body {
     background-color: #fafafa;
     margin: 0;
     padding: 0;
+    padding-top: 0; /* Ensure no top padding */
     overflow-x: hidden;
+    position: relative;
+}
+
+/* Prevent content from appearing above navbar */
+*:before, *:after {
+    position: static !important;
+}
+
+body *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
 }
 
 /* Fix scroll offset for fixed navbar */
@@ -102,6 +114,8 @@ html {
 .navbar {
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
