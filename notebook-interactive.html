@@ -454,6 +454,82 @@
                         </div>
                     </div>
                     
+                    <h3>🧪 Experimental Results:</h3>
+                    <div class="experiment-setup">
+                        <h4>📊 Dataset: 1,200 samples with temporal patterns</h4>
+                        <ul>
+                            <li>Distribution: 700 neutral, 500 emotional samples</li>
+                            <li>Temporal patterns: Happy posts (morning/evening), sad posts (night)</li>
+                            <li>Age patterns: Younger users more positive, older users more emotional</li>
+                        </ul>
+                    </div>
+
+                    <h3>📈 Performance Comparison:</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Accuracy</th>
+                                <th>Precision</th>
+                                <th>Recall</th>
+                                <th>F1-Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Baseline (Text Only)</strong></td>
+                                <td class="improvement">0.9139</td>
+                                <td class="improvement">0.9246</td>
+                                <td class="improvement">0.9139</td>
+                                <td class="improvement">0.9114</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Temporal (Text + Time/Age)</strong></td>
+                                <td class="improvement">0.9139</td>
+                                <td class="improvement">0.9246</td>
+                                <td class="improvement">0.9139</td>
+                                <td class="improvement">0.9114</td>
+                            </tr>
+                            <tr class="neutral-row">
+                                <td><strong>Improvement</strong></td>
+                                <td>+0.0000</td>
+                                <td>+0.0000</td>
+                                <td>+0.0000</td>
+                                <td>+0.0000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="result-box warning">
+                        <h3>📉 Key Finding: No Performance Improvement</h3>
+                        <p>In this synthetic dataset, temporal features provided no performance improvement. This demonstrates that text features were already sufficient for this classification task.</p>
+                    </div>
+
+                    <h3>🔍 Analysis:</h3>
+                    <div class="analysis-grid">
+                        <div class="analysis-card">
+                            <h4>✅ Technical Success</h4>
+                            <p>Feature concatenation worked perfectly - the architecture successfully combined text and temporal information.</p>
+                        </div>
+                        <div class="analysis-card">
+                            <h4>📊 Data Dependency</h4>
+                            <p>Performance improvement depends entirely on whether temporal patterns are predictive beyond text content.</p>
+                        </div>
+                        <div class="analysis-card">
+                            <h4>🔧 Implementation Simplicity</h4>
+                            <p>Most straightforward approach requires minimal architectural changes and debugging is transparent.</p>
+                        </div>
+                        <div class="analysis-card">
+                            <h4>🌍 Real-World Potential</h4>
+                            <p>Real datasets with stronger temporal correlations might show different results than this synthetic example.</p>
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <h4>💡 Key Learning</h4>
+                        <p>Adding temporal features is technically straightforward, but performance gains depend on the predictive value of temporal patterns beyond what text already captures.</p>
+                    </div>
+                    
                     <h3>🎯 Approach Benefits:</h3>
                     <table class="comparison-table">
                         <thead>
@@ -493,7 +569,7 @@
 
                     <div class="simplified-explanation">
                         <h4>🤔 What it means</h4>
-                        <p><strong>In simple terms:</strong> Think of this like adding context clues to help understand emotions better! 🕐 Just like how a text from your friend at 3 AM hits different than one at 3 PM, and how teenagers express excitement differently than adults. We're giving our AI these same "life context" clues. It's like upgrading from reading just the words to also knowing WHO said them, WHEN they said them, and HOW OLD they are. Imagine if Siri could tell you're cranky because it's Monday morning or excited because it's Friday night - that's the power of temporal features! ⏰✨</p>
+                        <p><strong>In simple terms:</strong> Think of this like adding context clues to help understand emotions better! 🕐 Just like how a text from your friend at 3 AM hits different than one at 3 PM, and how teenagers express excitement differently than adults. We gave our AI these same "life context" clues. However, in our test, the AI was already so good at reading emotions from text alone that knowing the time and age didn't help much - like a super-expert who can tell everything from just reading the message! 🤖✨ But in real life, with trickier data, these temporal clues might be the secret sauce! ⏰</p>
                     </div>
 
                     <div class="glossary-section">

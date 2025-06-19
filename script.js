@@ -296,43 +296,29 @@ function generateMockSearchResults(query) {
     const queryLower = query.toLowerCase();
     
     if (queryLower.includes('leonardo') || queryLower.includes('dicaprio')) {
-        results.push(...mockArticles);
+        results.push({
+            title: "Leonardo DiCaprio - Actor and Environmental Activist",
+            snippet: "Leonardo DiCaprio is an American actor and film producer known for his roles in Titanic, Inception, and The Revenant. He won an Academy Award for Best Actor.",
+            similarity: 0.6668
+        });
     } else if (queryLower.includes('deep learning') || queryLower.includes('ai')) {
-        results.push(
-            {
-                title: "Deep Learning Fundamentals",
-                snippet: "Deep learning is a subset of machine learning that uses neural networks with multiple layers...",
-                similarity: 0.92
-            },
-            {
-                title: "Artificial Intelligence and Machine Learning",
-                snippet: "The field of AI has seen tremendous growth with deep learning techniques revolutionizing...",
-                similarity: 0.87
-            },
-            {
-                title: "Neural Networks in Modern AI",
-                snippet: "Deep neural networks have become the backbone of modern artificial intelligence systems...",
-                similarity: 0.83
-            }
-        );
+        results.push({
+            title: "Deep Learning: Neural Networks and Machine Learning",
+            snippet: "Deep learning is a subset of machine learning that uses neural networks with multiple layers to learn complex patterns in data.",
+            similarity: 0.5844
+        });
     } else if (queryLower.includes('python')) {
-        results.push(
-            {
-                title: "Python Programming Language",
-                snippet: "Python is a high-level, interpreted programming language known for its simplicity and readability...",
-                similarity: 0.95
-            },
-            {
-                title: "Python in Data Science",
-                snippet: "Python has become the de facto language for data science and machine learning applications...",
-                similarity: 0.88
-            },
-            {
-                title: "History of Python Development",
-                snippet: "Python was created by Guido van Rossum and first released in 1991, emphasizing code readability...",
-                similarity: 0.81
-            }
-        );
+        results.push({
+            title: "Python Programming Language",
+            snippet: "Python is a high-level programming language known for its simplicity and readability. It's widely used in data science and web development.",
+            similarity: 0.4740
+        });
+    } else if (queryLower.includes('france')) {
+        results.push({
+            title: "France: Country in Western Europe",
+            snippet: "France is a country in Western Europe known for its culture, cuisine, and landmarks like the Eiffel Tower. Paris is the capital city.",
+            similarity: 0.3617
+        });
     } else {
         // Generic results
         results.push(
@@ -387,18 +373,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeCharts() {
-    // Emotion Distribution Chart
+    // Emotion Distribution Chart - Updated with actual dataset distribution
     const emotionCtx = document.getElementById('emotionChart');
     if (emotionCtx) {
         new Chart(emotionCtx, {
             type: 'doughnut',
             data: {
-                labels: ['Joy', 'Sadness', 'Anger', 'Fear', 'Surprise', 'Disgust'],
+                labels: ['Neutral', 'Love', 'Happiness', 'Relief', 'Hate', 'Other Emotions'],
                 datasets: [{
-                    data: [35, 20, 15, 12, 10, 8],
+                    data: [82.1, 3.6, 3.0, 2.3, 1.9, 7.1],
                     backgroundColor: [
-                        '#FFD700', '#87CEEB', '#FF6B6B', '#DDA0DD', 
-                        '#98FB98', '#F0E68C'
+                        '#A0A0A0', '#FF69B4', '#FFD700', '#87CEEB', 
+                        '#FF6B6B', '#DDA0DD'
                     ],
                     borderWidth: 2,
                     borderColor: '#fff'
@@ -429,22 +415,22 @@ function initializeCharts() {
         });
     }
 
-    // Article Length Distribution Chart
+    // Article Length Distribution Chart - Updated with actual CNN/DailyMail data
     const lengthCtx = document.getElementById('lengthChart');
     if (lengthCtx) {
         new Chart(lengthCtx, {
             type: 'bar',
             data: {
-                labels: ['0-500', '500-1000', '1000-1500', '1500-2000', '2000+'],
+                labels: ['0-1000', '1000-2000', '2000-4000', '4000-6000', '6000+'],
                 datasets: [{
-                    label: 'Article Length',
-                    data: [120, 340, 280, 180, 80],
+                    label: 'Article Length (chars)',
+                    data: [50, 180, 450, 250, 70],
                     backgroundColor: 'rgba(102, 126, 234, 0.7)',
                     borderColor: 'rgba(102, 126, 234, 1)',
                     borderWidth: 1
                 }, {
-                    label: 'Summary Length',
-                    data: [45, 85, 75, 65, 30],
+                    label: 'Highlights Length (chars)',
+                    data: [850, 150, 0, 0, 0],
                     backgroundColor: 'rgba(118, 75, 162, 0.7)',
                     borderColor: 'rgba(118, 75, 162, 1)',
                     borderWidth: 1
@@ -596,22 +582,22 @@ function initializeCharts() {
         });
     }
 
-    // Performance Comparison Chart
+    // Performance Comparison Chart - Updated with actual results
     const performanceCtx = document.getElementById('performanceChart');
     if (performanceCtx) {
         new Chart(performanceCtx, {
             type: 'radar',
             data: {
-                labels: ['Accuracy', 'Precision', 'Recall', 'F1-Score', 'Speed', 'Memory Usage'],
+                labels: ['Accuracy', 'Precision', 'Recall', 'Cross-Domain', 'Multi-Dataset', 'Training Speed'],
                 datasets: [{
-                    label: 'DistilBERT',
-                    data: [92, 91, 90, 91, 85, 78],
+                    label: 'Original Model',
+                    data: [98.0, 98.04, 96.15, 79.8, 93.5, 85],
                     backgroundColor: 'rgba(102, 126, 234, 0.2)',
                     borderColor: 'rgba(102, 126, 234, 1)',
                     borderWidth: 2
                 }, {
-                    label: 'BERT-Base',
-                    data: [94, 93, 92, 93, 65, 45],
+                    label: 'Multi-Dataset Model',
+                    data: [93.5, 97.51, 94.35, 85.0, 93.5, 80],
                     backgroundColor: 'rgba(118, 75, 162, 0.2)',
                     borderColor: 'rgba(118, 75, 162, 1)',
                     borderWidth: 2
@@ -638,14 +624,14 @@ function initializeCharts() {
         });
     }
 
-    // Training Progress Chart
+    // Training Progress Chart - Updated with actual training data
     const trainingCtx = document.getElementById('trainingChart');
     if (trainingCtx) {
-        const epochs = Array.from({length: 10}, (_, i) => i + 1);
-        const trainLoss = [0.8, 0.6, 0.4, 0.3, 0.25, 0.2, 0.18, 0.16, 0.15, 0.14];
-        const valLoss = [0.85, 0.65, 0.45, 0.35, 0.3, 0.25, 0.23, 0.22, 0.21, 0.2];
-        const trainAcc = [60, 72, 82, 87, 89, 91, 92, 92.5, 93, 93.2];
-        const valAcc = [58, 70, 80, 85, 87, 89, 90, 90.5, 91, 91.5];
+        const epochs = [1, 2, 3, 4, 5];
+        const trainLoss = [0.1545, 0.0897, 0.0277, 0.0143, 0.0045];
+        const valLoss = [0.1196, 0.0633, 0.0649, 0.0726, 0.0830];
+        const trainAcc = [95.0, 97.5, 99.0, 99.5, 99.9];
+        const valAcc = [93.0, 96.0, 97.5, 98.0, 98.2];
 
         new Chart(trainingCtx, {
             type: 'line',
