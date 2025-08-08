@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>NLP Project 3 - Interactive Results Showcase | Ariel Soothy</title>    <link rel="stylesheet" href="styles.css">    <link rel="stylesheet" href="visualizations.css">    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>    <style>        body {            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;            margin: 0;            padding: 0;            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);            min-height: 100vh;        }                .notebook-container {            max-width: 1200px;            margin: 0 auto;            padding: 20px;        }                .project-header {            text-align: center;            color: white;            margin-bottom: 40px;        }                .project-header h1 {            font-size: 3em;            margin: 0;            background: linear-gradient(45deg, #ffd700, #ffed4e);            background-clip: text;            -webkit-background-clip: text;            -webkit-text-fill-color: transparent;            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);        }                .project-header p {            font-size: 1.2em;            margin: 10px 0;            opacity: 0.9;        }                .nav-pills {            display: flex;            justify-content: center;            margin: 30px 0;            gap: 10px;            flex-wrap: wrap;        }                .nav-pill {            background: rgba(255, 255, 255, 0.2);            color: white;            padding: 12px 24px;            border-radius: 25px;            cursor: pointer;            transition: all 0.3s ease;            border: 2px solid transparent;            font-weight: 500;        }                .nav-pill:hover {            background: rgba(255, 255, 255, 0.3);            transform: translateY(-2px);        }                .nav-pill.active {            background: linear-gradient(45deg, #ff6b6b, #ee5a24);            border-color: rgba(255, 255, 255, 0.5);            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);        }                .section {            display: none;        }                .section.active {            display: block;        }                .notebook-cell {            background: rgba(255, 255, 255, 0.95);            margin: 20px 0;            border-radius: 15px;            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);            backdrop-filter: blur(4px);            border: 1px solid rgba(255, 255, 255, 0.18);            overflow: hidden;            transition: transform 0.3s ease;        }                .notebook-cell:hover {            transform: translateY(-5px);        }                .cell-header {            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);            color: white;            padding: 15px 20px;            font-weight: bold;            cursor: pointer;            display: flex;            justify-content: space-between;            align-items: center;            transition: all 0.3s ease;        }                .cell-header:hover {            background: linear-gradient(90deg, #3d8bfe 0%, #00d2fe 100%);        }                .cell-header i {            transition: transform 0.3s ease;        }                .cell-header.expanded i {            transform: rotate(180deg);        }                .cell-content {            padding: 20px;            display: none;            animation: slideDown 0.3s ease;        }                .cell-content.active {            display: block;        }                @keyframes slideDown {            from { opacity: 0; transform: translateY(-10px); }            to { opacity: 1; transform: translateY(0); }        }                .question-number {            background: linear-gradient(45deg, #ff6b6b, #ee5a24);            color: white;            border-radius: 50%;            width: 30px;            height: 30px;            display: inline-flex;            align-items: center;            justify-content: center;            font-weight: bold;            margin-right: 10px;        }                .code-block {
+<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta name="theme-color" content="#4c51bf">    <meta name="color-scheme" content="light dark">    <title>NLP Project 3 - Interactive Results Showcase | Ariel Soothy</title>    <link rel="stylesheet" href="styles.css">    <link rel="stylesheet" href="visualizations.css">    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>    <style>        body {            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;            margin: 0;            padding: 0;            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);            min-height: 100vh;        }                .notebook-container {            max-width: 1200px;            margin: 0 auto;            padding: 20px;        }                .project-header {            text-align: center;            color: white;            margin-bottom: 40px;        }                .project-header h1 {            font-size: 3em;            margin: 0;            background: linear-gradient(45deg, #ffd700, #ffed4e);            background-clip: text;            -webkit-background-clip: text;            -webkit-text-fill-color: transparent;            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);        }                .project-header p {            font-size: 1.2em;            margin: 10px 0;            opacity: 0.9;        }                .nav-pills {            display: flex;            justify-content: center;            margin: 30px 0;            gap: 10px;            flex-wrap: wrap;        }                .nav-pill {            background: rgba(255, 255, 255, 0.2);            color: white;            padding: 12px 24px;            border-radius: 25px;            cursor: pointer;            transition: all 0.3s ease;            border: 2px solid transparent;            font-weight: 500;        }                .nav-pill:hover {            background: rgba(255, 255, 255, 0.3);            transform: translateY(-2px);        }                .nav-pill.active {            background: linear-gradient(45deg, #ff6b6b, #ee5a24);            border-color: rgba(255, 255, 255, 0.5);            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);        }                .section {            display: none;        }                .section.active {            display: block;        }                .notebook-cell {            background: rgba(255, 255, 255, 0.95);            margin: 20px 0;            border-radius: 15px;            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);            backdrop-filter: blur(4px);            border: 1px solid rgba(255, 255, 255, 0.18);            overflow: hidden;            transition: transform 0.3s ease;        }                .notebook-cell:hover {            transform: translateY(-5px);        }                .cell-header {            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);            color: white;            padding: 15px 20px;            font-weight: bold;            cursor: pointer;            display: flex;            justify-content: space-between;            align-items: center;            transition: all 0.3s ease;        }                .cell-header:hover {            background: linear-gradient(90deg, #3d8bfe 0%, #00d2fe 100%);        }                .cell-header i {            transition: transform 0.3s ease;        }                .cell-header.expanded i {            transform: rotate(180deg);        }                .cell-content {            padding: 20px;            display: none;            animation: slideDown 0.3s ease;        }                .cell-content.active {            display: block;        }                @keyframes slideDown {            from { opacity: 0; transform: translateY(-10px); }            to { opacity: 1; transform: translateY(0); }        }                .question-number {            background: linear-gradient(45deg, #ff6b6b, #ee5a24);            color: white;            border-radius: 50%;            width: 30px;            height: 30px;            display: inline-flex;            align-items: center;            justify-content: center;            font-weight: bold;            margin-right: 10px;        }                .code-block {
             background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
             color: #e2e8f0;
             border-radius: 12px;
@@ -1262,54 +1262,75 @@
     </div>
 
     <script>
-        // Toggle cell content
+        // Toggle cell content (with ARIA updates)
         function toggleCell(header) {
             const content = header.nextElementSibling;
-            const icon = header.querySelector('i');
-            
-            if (content.classList.contains('active')) {
-                content.classList.remove('active');
-                header.classList.remove('expanded');
-            } else {
-                content.classList.add('active');
-                header.classList.add('expanded');
-            }
+            const willExpand = !content.classList.contains('active');
+
+            content.classList.toggle('active', willExpand);
+            header.classList.toggle('expanded', willExpand);
+
+            header.setAttribute('aria-expanded', String(willExpand));
+            if (content) content.setAttribute('aria-hidden', String(!willExpand));
         }
         
-        // Show section
-        function showSection(sectionId) {
+        // Show section (accepts event optionally for better handling)
+        function showSection(evtOrId, maybeId) {
+            const isEvent = typeof evtOrId === 'object' && evtOrId !== null;
+            const sectionId = isEvent ? maybeId : evtOrId;
+            const target = document.getElementById(sectionId);
+            if (!target) return;
+
             // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
+                section.setAttribute('aria-hidden', 'true');
             });
-            
-            // Remove active from all pills
+
+            // Deselect pills
             document.querySelectorAll('.nav-pill').forEach(pill => {
                 pill.classList.remove('active');
+                pill.setAttribute('aria-selected', 'false');
             });
-            
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Add active to clicked pill
-            event.target.closest('.nav-pill').classList.add('active');
+
+            // Activate target
+            target.classList.add('active');
+            target.setAttribute('aria-hidden', 'false');
+
+            // Activate corresponding pill
+            let pill = null;
+            if (isEvent && evtOrId.target) pill = evtOrId.target.closest('.nav-pill');
+            if (!pill) pill = document.querySelector(`.nav-pill[onclick*="'${sectionId}'"]`);
+            if (pill) {
+                pill.classList.add('active');
+                pill.setAttribute('aria-selected', 'true');
+                pill.focus({ preventScroll: true });
+            }
+
+            // Update URL hash for deep-linking
+            if (location.hash !== `#${sectionId}`) {
+                history.replaceState(null, '', `#${sectionId}`);
+            }
+
+            target.focus({ preventScroll: true });
         }
         
-        // Copy code function
+        // Copy code function (with ARIA feedback)
         function copyCode(button) {
             const codeBlock = button.closest('.code-block');
             const codeContent = codeBlock.querySelector('.code-content pre code');
             const textToCopy = codeContent.textContent;
-            
+
             navigator.clipboard.writeText(textToCopy).then(function() {
-                // Visual feedback
                 const originalText = button.innerHTML;
                 button.innerHTML = '<i class="fas fa-check"></i> Copied!';
                 button.style.background = 'rgba(34, 197, 94, 0.3)';
+                button.setAttribute('aria-label', 'Code copied to clipboard');
                 
                 setTimeout(function() {
                     button.innerHTML = originalText;
                     button.style.background = 'rgba(255, 255, 255, 0.1)';
+                    button.setAttribute('aria-label', 'Copy code');
                 }, 2000);
             }).catch(function(err) {
                 console.error('Could not copy text: ', err);
@@ -1320,10 +1341,170 @@
             });
         }
         
-        // Initialize charts when page loads
+        // Initialize charts and enhance interactions on load
         document.addEventListener('DOMContentLoaded', function() {
+            // ARIA setup for tabs/sections
+            const pillsContainer = document.querySelector('.nav-pills');
+            if (pillsContainer) {
+                pillsContainer.setAttribute('role', 'tablist');
+                pillsContainer.querySelectorAll('.nav-pill').forEach(pill => {
+                    pill.setAttribute('role', 'tab');
+                    pill.setAttribute('tabindex', '0');
+                    pill.setAttribute('aria-selected', pill.classList.contains('active') ? 'true' : 'false');
+                });
+                // Keyboard: Enter/Space activate
+                pillsContainer.addEventListener('keydown', (e) => {
+                    if (e.key !== 'Enter' && e.key !== ' ') return;
+                    const pill = e.target.closest('.nav-pill');
+                    if (!pill) return;
+                    e.preventDefault();
+                    const match = (pill.getAttribute('onclick') || '').match(/showSection\(['\"](.*?)['\"]\)/);
+                    if (match && match[1]) showSection(match[1]);
+                });
+            }
+
+            document.querySelectorAll('.section').forEach(section => {
+                section.setAttribute('role', 'tabpanel');
+                section.setAttribute('tabindex', '0');
+                section.setAttribute('aria-hidden', section.classList.contains('active') ? 'false' : 'true');
+            });
+
+            // Keyboard support for cell headers
+            document.querySelectorAll('.cell-header').forEach(header => {
+                header.setAttribute('role', 'button');
+                header.setAttribute('tabindex', '0');
+                header.setAttribute('aria-expanded', 'false');
+                header.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleCell(header);
+                    }
+                });
+                const content = header.nextElementSibling;
+                if (content) content.setAttribute('aria-hidden', 'true');
+            });
+
+            // Inject toolbar for expand/collapse all
+            const pills = document.querySelector('.nav-pills');
+            if (pills) {
+                const toolbar = document.createElement('div');
+                toolbar.className = 'toolbar';
+                toolbar.setAttribute('aria-label', 'Cell actions');
+                toolbar.innerHTML = `
+                    <button type="button" id="expandAllBtn"><i class="fas fa-plus-square" aria-hidden="true"></i> Expand All</button>
+                    <button type="button" id="collapseAllBtn"><i class="fas fa-minus-square" aria-hidden="true"></i> Collapse All</button>
+                `;
+                pills.insertAdjacentElement('afterend', toolbar);
+                document.getElementById('expandAllBtn').addEventListener('click', expandAllCells);
+                document.getElementById('collapseAllBtn').addEventListener('click', collapseAllCells);
+            }
+
+            // Reduced motion fallback
+            const style = document.createElement('style');
+            style.textContent = `
+                /* Respect reduced motion */
+                @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+
+                /* CSS variables aligned with site theme */
+                :root{
+                    --primary-color:#2d3748;
+                    --text-color:#4a5568;
+                    --text-light:#a0aec0;
+                    --card-background:#f7fafc;
+                    --accent-color:#667eea;
+                }
+
+                /* Toolbar */
+                .toolbar{display:flex;gap:10px;justify-content:center;margin:10px 0 20px}
+                .toolbar button{background:rgba(255,255,255,0.9);color:#1f2937;border:1px solid rgba(0,0,0,0.1);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+                .toolbar button:hover{background:#fff}
+
+                /* THEME OVERRIDES: align with site styles.css (neutral, minimal colors) */
+                body{background:#fafafa !important;color:#333}
+                .project-header{color:#2d3748}
+                .project-header h1{background:none !important;-webkit-background-clip:initial !important;-webkit-text-fill-color:initial !important;color:#2d3748;text-shadow:none}
+
+                .nav-pills{margin:30px 0}
+                .nav-pill{background:#ffffff;color:#4a5568;border:1px solid #e2e8f0;border-radius:25px;padding:12px 24px}
+                .nav-pill:hover{background:#f7fafc;transform:none}
+                .nav-pill.active{background:#667eea;color:#ffffff;border-color:#667eea;box-shadow:0 4px 15px rgba(102,126,234,0.25)}
+
+                .notebook-cell{background:#ffffff;border:1px solid #e2e8f0;box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+                .notebook-cell:hover{transform:none}
+                .cell-header{background:#f7fafc !important;color:#2d3748 !important;border-bottom:1px solid #e2e8f0}
+                .cell-header:hover{background:#edf2f7}
+                .question-number{background:#667eea;color:#ffffff}
+
+                /* Code blocks: subdued dark theme, fewer accent colors */
+                .code-block{background:#2d3748;border:1px solid #cbd5e0;box-shadow:none}
+                .code-header{background:#4c51bf;color:#ffffff}
+                .code-content{background:#1f2937}
+                .keyword,.string,.comment,.function,.variable,.number,.operator{color:#e2e8f0}
+                .code-block:hover .code-content::before{opacity:0}
+
+                /* Results & cards */
+                .result-box{background:#f7fafc;color:#4a5568;border:1px solid #e2e8f0}
+                .metric-card{background:#ffffff !important;color:#2d3748 !important;border:1px solid #e2e8f0;box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+                .metric-card:hover{transform:none}
+                .chart-container{background:#ffffff;border:1px solid #e2e8f0}
+                .architecture-diagram{background:#ffffff;border:1px solid #e2e8f0}
+
+                /* Tables */
+                .comparison-table{background:#ffffff;border:1px solid #e2e8f0}
+                .comparison-table th{background:#f7fafc;color:#2d3748}
+                .comparison-table tr:hover{background:#f8f9fa}
+
+                /* Informational callouts */
+                .insight-box,.simplified-explanation,.question-glossary{background:#ffffff;color:#4a5568;border-left:4px solid #667eea;box-shadow:none}
+                .simplified-explanation h4,.question-glossary h4{color:#2d3748}
+
+                /* Steps & badges */
+                .step{background:#f7fafc;color:#4a5568;border:1px solid #e2e8f0}
+                .step::after{color:#cbd5e0}
+                .badge{background:#f7fafc;color:#4a5568;border:1px solid #e2e8f0}
+                .badge.success{color:#16a34a;background:#f0fdf4;border-color:#a7f3d0}
+                .badge.warning{color:#d97706;background:#fffbeb;border-color:#fde68a}
+
+                /* Progress */
+                .progress-bar{background:#e2e8f0}
+                .progress-fill{background:#667eea}
+            `;
+            document.head.appendChild(style);
+
+            // Deep-link to section from URL hash
+            const hash = (location.hash || '').slice(1);
+            if (hash && document.getElementById(hash)) {
+                showSection(hash);
+            }
+
             initializeCharts();
         });
+
+        function expandAllCells() {
+            document.querySelectorAll('.notebook-cell').forEach(cell => {
+                const header = cell.querySelector('.cell-header');
+                const content = cell.querySelector('.cell-content');
+                if (header && content) {
+                    header.classList.add('expanded');
+                    content.classList.add('active');
+                    header.setAttribute('aria-expanded', 'true');
+                    content.setAttribute('aria-hidden', 'false');
+                }
+            });
+        }
+
+        function collapseAllCells() {
+            document.querySelectorAll('.notebook-cell').forEach(cell => {
+                const header = cell.querySelector('.cell-header');
+                const content = cell.querySelector('.cell-content');
+                if (header && content) {
+                    header.classList.remove('expanded');
+                    content.classList.remove('active');
+                    header.setAttribute('aria-expanded', 'false');
+                    content.setAttribute('aria-hidden', 'true');
+                }
+            });
+        }
         
         function initializeCharts() {
             // Emotion Distribution Chart
@@ -1371,7 +1552,7 @@
                         labels: ['Original Dataset', 'Emotions Dataset', 'Sentiment Dataset'],
                         datasets: [{
                             label: 'Model Accuracy (%)',
-                            data: [81.5, 0, 46],
+                            data: [98, 79.8, 47.2],
                             backgroundColor: ['#3b82f6', '#ef4444', '#f59e0b'],
                             borderColor: ['#1d4ed8', '#dc2626', '#d97706'],
                             borderWidth: 2
@@ -1383,7 +1564,7 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Model Accuracy = % Neutral in Dataset (Proof of Bias)',
+                                text: 'Cross-Dataset Accuracy Comparison',
                                 font: { size: 16 }
                             }
                         },
@@ -1406,13 +1587,13 @@
                         labels: ['Accuracy', 'Precision', 'Recall'],
                         datasets: [{
                             label: 'Original Model',
-                            data: [81.5, 0, 0],
+                            data: [98, 98.04, 96.15],
                             backgroundColor: '#ef4444',
                             borderColor: '#dc2626',
                             borderWidth: 2
                         }, {
                             label: 'Retrained Model',
-                            data: [87.9, 87.2, 67.9],
+                            data: [93.5, 97.51, 94.35],
                             backgroundColor: '#22c55e',
                             borderColor: '#16a34a',
                             borderWidth: 2
