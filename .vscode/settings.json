@@ -1,11 +1,8 @@
 {
     "python.defaultInterpreterPath": "/Users/arielsoothy/opt/anaconda3/envs/ai_advanced_env/bin/python",
     "python.terminal.activateEnvironment": true,
-    "jupyter.kernels.filter": [
-        {
-            "path": "/Users/arielsoothy/opt/anaconda3/envs/ai_advanced_env/bin/python",
-            "type": "pythonEnvironment"
-        }
-    ],
-    "jupyter.defaultKernel": "/Users/arielsoothy/opt/anaconda3/envs/ai_advanced_env/bin/python"
+    "jupyter.defaultKernel": "/Users/arielsoothy/opt/anaconda3/envs/ai_advanced_env/bin/python",
+    "jupyter.kernels.excludePythonEnvironments": [
+        "/Users/arielsoothy/opt/anaconda3/envs/ai_advanced_env/bin/python"
+    ]
 }

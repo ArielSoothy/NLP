@@ -1,6 +1,6 @@
-# 🌟 NLP Project 3 - Interactive Website
+# 🌟 NLP Project - Interactive Website
 
-An interactive, visually appealing website that explains the NLP Project 3 step by step. This website showcases three main NLP tasks: **Text Classification**, **Text Summarization**, and **Information Retrieval** using modern deep learning approaches.
+An interactive, visually appealing website that demonstrates three main NLP tasks: **Text Classification**, **Text Summarization**, and **Information Retrieval** using modern deep learning approaches.
 
 ## 🎯 Features
 
@@ -52,12 +52,11 @@ An interactive, visually appealing website that explains the NLP Project 3 step 
    ```
 4. **Open your browser** and navigate to `http://localhost:8000`
 
-### Option 2: GitHub Pages Deployment
+### Option 2: Deploy to Web
 
-1. **Create a new GitHub repository**
-2. **Upload all website files** (`index.html`, `styles.css`, `script.js`)
-3. **Enable GitHub Pages** in repository settings
-4. **Access your live website** at `https://yourusername.github.io/repository-name`
+1. **Fork or clone this repository**
+2. **Deploy to your preferred platform** (GitHub Pages, Netlify, Vercel, etc.)
+3. **Configure any necessary settings** for your deployment platform
 
 ## 📁 File Structure
 
@@ -221,6 +220,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Built with ❤️ for NLP education and exploration**
 
-🌐 **Live Demo**: [Your GitHub Pages URL]
-📧 **Contact**: [Your Email]
-🐙 **GitHub**: [Your GitHub Profile]
+🌐 **Live Demo**: Open `index.html` in your browser
+📧 **Contact**: Replace with your contact information
+🐙 **GitHub**: Replace with your GitHub profile

@@ -1,5 +1,5 @@
 # Part 1.7 - Adding Temporal Features (Simple Implementation)
-# Google Colab Code - Ariel Soothy
+# Google Colab Code - Temporal Features for Text Classification
 
 """
 GOAL: Add time and age information to improve text classification
@@ -9,7 +9,8 @@ APPROACH: Feature concatenation (most straightforward method)
 # ====================================================================
 # Setup
 # ====================================================================
-!pip install scikit-learn transformers torch pandas numpy matplotlib
+# Install required packages: scikit-learn transformers torch pandas numpy matplotlib
+# Run: pip install scikit-learn transformers torch pandas numpy matplotlib
 
 import torch
 import pandas as pd

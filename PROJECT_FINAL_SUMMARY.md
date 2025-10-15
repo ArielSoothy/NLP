@@ -1,7 +1,6 @@
-# 🎓 NLP Project 3 - Final Summary
-**Student:** Ariel Soothy  
-**Course:** AI/NLP  
-**Completion Date:** June 16, 2025
+# 🎓 NLP Project - Final Summary
+**Project:** Natural Language Processing Demonstration  
+**Topics:** Text Classification, Text Summarization, Information Retrieval
 
 ## 🎯 Project Overview
 
@@ -107,14 +106,12 @@ This comprehensive NLP project covers three main areas:
 - `index.html` - Interactive website presentation
 - `notebook-interactive.html` - Interactive notebook view
 - `styles.css`, `script.js` - Website assets
-- `answers.txt` - Course submission answers
-- `Ariel Soothy - Project 3 - NLP .txt` - Course requirements
 
 ### Python Implementations
 - `info_retrieval_simple.py` - Information retrieval (Part 3 implementation)
 - `summarization.py` - Text summarization implementation (Part 2)
 - `Part_1_7_Temporal_Features_Google_Colab.py` - Temporal features Google Colab code
-- `Ariel Soothy - Project_3_Part_3_1_Text_Classification (1).ipynb` - Main classification notebook
+- Classification notebooks and implementation files
 
 ### Model Files
 - `results/final_model/` - Original trained model (98.04% precision, 96.15% recall)
