@@ -488,94 +488,69 @@ function initializeCharts() {
         });
     }
 
-    // Similarity Heatmap
+    // Similarity Score Comparison - Using actual documented results
     const similarityCtx = document.getElementById('similarityChart');
     if (similarityCtx) {
-        const queries = ['Leonardo DiCaprio', 'Deep Learning', 'Python', 'France'];
-        const articles = ['Actor Biography', 'AI Research', 'Programming Guide', 'Country Info', 'Tech News'];
-        
-        // Generate mock similarity matrix
-        const data = [];
-        queries.forEach((query, i) => {
-            articles.forEach((article, j) => {
-                let similarity = Math.random() * 0.4 + 0.2; // Base similarity
-                // Boost relevant matches
-                if ((i === 0 && j === 0) || (i === 1 && j === 1) || (i === 2 && j === 2) || (i === 3 && j === 3)) {
-                    similarity += 0.4;
-                }
-                data.push({
-                    x: j,
-                    y: i,
-                    v: similarity
-                });
-            });
-        });
-
         new Chart(similarityCtx, {
-            type: 'scatter',
+            type: 'bar',
             data: {
+                labels: ['Leonardo DiCaprio', 'Deep Learning', 'Python', 'France'],
                 datasets: [{
                     label: 'Similarity Score',
-                    data: data,
-                    backgroundColor: function(context) {
-                        const value = context.parsed.v;
-                        const alpha = value;
-                        return `rgba(102, 126, 234, ${alpha})`;
-                    },
-                    pointRadius: function(context) {
-                        return context.parsed.v * 20 + 5;
-                    }
+                    data: [0.6668, 0.5844, 0.4740, 0.3617],
+                    backgroundColor: 'rgba(102, 126, 234, 0.7)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 1
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        min: -0.5,
-                        max: 4.5,
-                        ticks: {
-                            stepSize: 1,
-                            callback: function(value) {
-                                return articles[value] || '';
-                            }
-                        },
+                    y: {
+                        beginAtZero: true,
+                        max: 1,
                         title: {
                             display: true,
-                            text: 'Articles'
+                            text: 'Similarity Score',
+                            font: {
+                                size: 11
+                            }
+                        },
+                        ticks: {
+                            font: {
+                                size: 10
+                            },
+                            callback: function(value) {
+                                return (value * 100).toFixed(0) + '%';
+                            }
                         }
                     },
-                    y: {
-                        min: -0.5,
-                        max: 3.5,
-                        ticks: {
-                            stepSize: 1,
-                            callback: function(value) {
-                                return queries[value] || '';
-                            }
-                        },
+                    x: {
                         title: {
                             display: true,
-                            text: 'Queries'
+                            text: 'Query',
+                            font: {
+                                size: 11
+                            }
+                        },
+                        ticks: {
+                            font: {
+                                size: 10
+                            }
                         }
                     }
                 },
                 plugins: {
-                    tooltip: {
-                        callbacks: {
-                            title: function(context) {
-                                const point = context[0];
-                                return `${queries[point.parsed.y]} → ${articles[point.parsed.x]}`;
-                            },
-                            label: function(context) {
-                                return `Similarity: ${(context.parsed.v * 100).toFixed(1)}%`;
-                            }
-                        }
-                    },
                     legend: {
                         display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'Similarity: ' + (context.parsed.y * 100).toFixed(2) + '%';
+                            }
+                        }
                     }
                 }
             }
