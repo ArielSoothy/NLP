@@ -220,6 +220,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Built with ❤️ for NLP education and exploration**
 
-🌐 **Live Demo**: Open `index.html` in your browser
-📧 **Contact**: Replace with your contact information
-🐙 **GitHub**: Replace with your GitHub profile
+🌐 **Live Demo**: [https://arielsoothy.github.io/NLP/](https://arielsoothy.github.io/NLP/)
+📧 **Contact**: [LinkedIn - Ariel Soothy](https://www.linkedin.com/in/ariel-soothy/)
+🐙 **GitHub**: [ArielSoothy/NLP](https://github.com/ArielSoothy/NLP)
